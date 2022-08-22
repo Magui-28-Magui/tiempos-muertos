@@ -18,7 +18,7 @@ class FormController extends CI_Controller
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/userguide3/general/urls.html
      */
-    
+
     public function index()
     {
     }
@@ -63,10 +63,15 @@ class FormController extends CI_Controller
         echo json_encode($result);
     }
 
-    public function submit(){
+    public function submit()
+    {
         $result = $this->Form->getSubmit($this->input->post);
-    
-        echo json_encode($result);
-        redirect('/', 'refresh');                        
+
+        if ($result === true) {
+            $this->session->set_flashdata('success_message', 'Se a agregado correctamente');
+        } else {
+            $this->session->set_flashdata('error_message', 'Ha ocurrido un error al realizar esta peticion');
+        }
+        redirect('/', 'refresh');
     }
 }

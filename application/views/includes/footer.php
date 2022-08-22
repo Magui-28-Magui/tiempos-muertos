@@ -18,6 +18,7 @@
 <script src="<?php echo  base_url() ?>assets/datatables/Buttons-2.2.3/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="<?php echo  base_url() ?>assets/js/sweetalert.js"></script>
 <script>
     function getPlants() {
         axios.get("http://localhost/tiempo-muerto/index.php/plants").then(result => {
@@ -119,7 +120,6 @@
             result.data.forEach(value => {
                 const option = document.createElement('option');
 
-                console.log(option)
                 option.style = "font-size: 1rem";
                 option.innerHTML = value.code + ' ' + '-' + ' ' + value.cause;
                 select.appendChild(option);
@@ -165,13 +165,13 @@
                             title: 'Fecha'
                         },
                         {
-                            title: 'Descripcion'
+                            title: 'Descripción'
                         },
                         {
-                            title: 'Codigo de causa'
+                            title: 'Código de causa'
                         },
                         {
-                            title: 'Maquina'
+                            title: 'Máquina'
                         },
                         {
                             title: 'No. Parte'
@@ -179,11 +179,20 @@
                         {
                             title: 'Tiempo (Min)'
                         },
+                        {
+                            title: 'Tiempo (Hrs)'
+                        },
                     ],
                 });
             });
         });
     }
+
+    $(document).ready(function() {
+        $(".alert").fadeTo(2000, 500).slideUp(500, function() {
+            $(".alert").slideUp(500);
+        });
+    });
 
     $("#get_planner_code").change(function() {
         var selectedOptions = [];
@@ -198,6 +207,8 @@
         const str = selectedOptions.join(',');
         $('#planner_codes').val(str);
     });
+
+
 
     loadTableData();
     getCausesCode();

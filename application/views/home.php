@@ -1,4 +1,15 @@
 <div class="container my-5">
+    <?php if ($this->session->flashdata('success_message') !== NULL) : ?>
+        <div class="alert alert-success" id="alert_success" role="alert">
+            <div class="fw-bold"><?php echo $this->session->flashdata('success_message'); ?>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('error_message') !== NULL) : ?>
+        <div class="alert alert-danger" id="alert_error" role="alert">
+            <div class="fw-bold"><?php echo $this->session->flashdata('error_message'); ?></div>
+        </div>
+    <?php endif; ?>
     <div class="bg-white shadow p-4">
         <div class="row">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -54,7 +65,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="planner_code" class="form-label">Planner code</label><span class="text-danger"> (*)</span>
-                                <input type="hidden" name="planner_codes" id="planner_codes"/>
+                                <input type="hidden" name="planner_codes" id="planner_codes" />
                                 <select class="form-control selectpicker" name="planner_code" multiple id="get_planner_code" onchange="console.log(this.value)">
                                 </select>
                             </div>
@@ -73,7 +84,7 @@
                                 <input type="text" class="form-control" id="part_number" name="part_number">
                             </div>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2 mt-5">
-                                <button class="btn rounded-pill px-4 text-white fw-bold" style="background: #00468A" type="submit">Guardar cambios</button>
+                                <button class="btn rounded-pill px-4 text-white fw-bold" name="save_form" style="background: #00468A" type="submit">Guardar cambios</button>
                             </div>
                         </div>
                         <?php echo form_close() ?>
