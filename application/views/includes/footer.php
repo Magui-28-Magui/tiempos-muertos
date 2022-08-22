@@ -18,10 +18,9 @@
 <script src="<?php echo  base_url() ?>assets/datatables/Buttons-2.2.3/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="<?php echo  base_url() ?>assets/js/sweetalert.js"></script>
 <script>
     function getPlants() {
-        axios.get("http://localhost/tiempo-muerto/index.php/plants").then(result => {
+        axios.get(<?base_url().'index.php/plants'?>).then(result => {
 
             const select = document.getElementById("get_plants");
 
@@ -45,7 +44,7 @@
     }
 
     function getLines(get_plant) {
-        axios.get("http://localhost/tiempo-muerto/index.php/lines").then(result => {
+        axios.get(<?base_url().'index.php/lines'?>).then(result => {
             const select = document.getElementById("get_lines");
 
             var area_filter = [];
@@ -67,7 +66,7 @@
     }
 
     function getPlannerCode(get_plant) {
-        axios.get("http://localhost/tiempo-muerto/index.php/lines").then(result => {
+        axios.get(<?base_url().'index.php/lines'?>).then(result => {
 
             const select = document.getElementById("get_planner_code");
 
@@ -90,7 +89,7 @@
     }
 
     function getSupervisor(get_plant) {
-        axios.get("http://localhost/tiempo-muerto/index.php/supervisor").then(result => {
+        axios.get(<?base_url().'index.php/supervisor'?>).then(result => {
 
             const select = document.getElementById("get_supervisor");
 
@@ -113,7 +112,7 @@
     }
 
     function getCausesCode() {
-        axios.get("http://localhost/tiempo-muerto/index.php/causes_code").then(result => {
+        axios.get(<?base_url().'index.php/causes_code'?>).then(result => {
 
             const select = document.getElementById("cause_code");
 
@@ -130,7 +129,7 @@
     }
 
     function loadTableData() {
-        axios.get("http://localhost/tiempo-muerto/index.php/get_data").then(result => {
+        axios.get(<?base_url().'index.php/get_data'?>).then(result => {
 
             var arr = [];
 
