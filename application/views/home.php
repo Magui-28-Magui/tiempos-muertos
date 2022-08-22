@@ -77,7 +77,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="time" class="form-label">Tiempo (Minutos)</label><span class="text-danger"> (*)</span>
-                                <input type="number" class="form-control" id="time" name="time" required>
+                                <input type="number" class="form-control" id="time" name="time" min="1" pattern="^[0-9]+" required>
                             </div>
                             <div class="mb-3">
                                 <label for="part_number" class="form-label">Número de parte</label>
