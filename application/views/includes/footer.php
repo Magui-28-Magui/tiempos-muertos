@@ -20,7 +20,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     function getPlants() {
-        axios.get(<?base_url().'index.php/plants'?>).then(result => {
+        axios.get(<?base_url()?>.'index.php/plants').then(result => {
 
             const select = document.getElementById("get_plants");
 
@@ -206,8 +206,6 @@
         const str = selectedOptions.join(',');
         $('#planner_codes').val(str);
     });
-
-
 
     loadTableData();
     getCausesCode();
