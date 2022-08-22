@@ -44,7 +44,7 @@
     }
 
     function getLines(get_plant) {
-        axios.get('<?base_url().'index.php/lines'?>').then(result => {
+        axios.get('<?= base_url().'index.php/lines'?>').then(result => {
             const select = document.getElementById("get_lines");
 
             var area_filter = [];
