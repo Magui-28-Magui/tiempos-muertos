@@ -91,6 +91,11 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                        <div class="fw-bold text-danger">
+                        Para eliminar un registro favor de ponerse en contacto con el departamento de Mejora Continua
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table display text-center p-0" id="table_id" style="width: 100%;">
                         </table>
