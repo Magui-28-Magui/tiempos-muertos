@@ -14,19 +14,25 @@
         <div class="row">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active text-dark fw-bold" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
-                        <img width="20" src="<?php echo base_url(); ?>assets/img/clock.gif" alt="">
+                    <button class="nav-link active text-dark fw-bold" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="true">
+                        <img width="25" src="<?php echo base_url(); ?>assets/img/plus.gif" alt="">
                         Registro</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                        <img width="20" src="<?php echo base_url(); ?>assets/img/list.gif" alt="">
+                    <button class="nav-link text-dark fw-bold" id="table-tab" data-bs-toggle="tab" data-bs-target="#table" type="button" role="tab" aria-controls="table" aria-selected="false">
+                        <img width="25" src="<?php echo base_url(); ?>assets/img/list.gif" alt="">
                         Tabla
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-dark fw-bold" id="chart-tab" data-bs-toggle="tab" data-bs-target="#chart" type="button" role="tab" aria-controls="chart" aria-selected="false">
+                        <img width="25" src="<?php echo base_url(); ?>assets/img/chart.gif" alt="">
+                        Gráficas
                     </button>
                 </li>
             </ul>
             <div class="tab-content p-3" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active" id="register" role="tabpanel" aria-labelledby="register-tab">
                     <?php echo form_open('formcontroller/submit'); ?>
                     <div class="row">
                         <div class="col-md-6">
@@ -90,7 +96,7 @@
                         <?php echo form_close() ?>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" id="table" role="tabpanel" aria-labelledby="table-tab">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
                         <div class="fw-bold text-danger">
                         Para eliminar un registro favor de ponerse en contacto con el departamento de Mejora Continua
@@ -99,6 +105,14 @@
                     <div class="table-responsive">
                         <table class="table display text-center p-0" id="table_id" style="width: 100%;">
                         </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="chart" role="tabpanel" aria-labelledby="chart-tab">
+                    <div class="h1 text-center text-uppercase text-warning fw-bold">
+                        En construcción
+                    </div>
+                    <div class="d-flex justify-content-center">
+                    <img class="my-3" src="<?php echo base_url(); ?>assets/img/road-closure.gif" alt="construct">
                     </div>
                 </div>
             </div>
