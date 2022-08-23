@@ -1,8 +1,8 @@
 </main>
 <!-- Footer -->
-<footer class="footer mt-auto py-3 bg-white shadow border-top">
+<footer class="footer mt-auto py-3 shadow border-top" style="background-color: #00468A;">
     <div class="container">
-        <span class="text-muted">© 2022 MARTECH MEDICAL PRODUCTS.</span>
+        <span class="text-white">© 2022 MARTECH MEDICAL PRODUCTS.</span>
     </div>
 </footer>
 
@@ -164,7 +164,7 @@
                             title: 'Fecha'
                         },
                         {
-                            title: 'Descripción'
+                            title: 'Info. adicional'
                         },
                         {
                             title: 'Código de causa'
