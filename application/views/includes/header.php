@@ -25,7 +25,7 @@
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <!-- add more navbar -->
                     </ul>
-                    <span class="navbar-text text-uppercase fw-bold" style="color: #00468A;">
+                    <span class="navbar-text text-uppercase fw-bold fs-5" style="color: #00468A;">
                         Registro de factores que afectan eficiencia
                     </span>
                     <!--<form class="d-flex" style="margin-right: 4rem;">
@@ -40,6 +40,14 @@
                             </li>
                         </ul>
                     </form>-->
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-danger shadow p-0 m-0">
+            <div class="container-fluid">
+                    <span class="navbar-text text-uppercase fw-bold text-white" style="font-size: 0.8rem;">
+                        <!--Registro de factores que afectan eficiencia-->
+                    </span>
                 </div>
             </div>
         </nav>
