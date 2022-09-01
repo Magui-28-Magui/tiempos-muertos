@@ -84,5 +84,16 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
+defined('NAME')      or define('NAME', 'tiempos_muertos_name');
+defined('LASTNAME')      or define('LASTNAME', 'tiempos_muertos_lastname');
+defined('EMAIL')      or define('EMAIL', 'tiempos_muertos_email');
+defined('MARTECH_NUMBER')      or define('MARTECH_NUMBER', 'tiempos_muertos_martech_number');
+defined('LEVEL_NAME')      or define('LEVEL_NAME', 'tiempos_muertos_level_name');
+defined('LEVEL_VALUE')      or define('LEVEL_VALUE', 'tiempos_muertos_level_value');
+defined('DEPARTMENT_NAME')      or define('DEPARTMENT_NAME', 'tiempos_muertos_department_name');
+defined('DEPARTMENT_ID')      or define('DEPARTMENT_ID', 'tiempos_muertos_department_id');
+defined('IS_LOGGED_IN')       or define('IS_LOGGED_IN', 'tiempos_muertos_is_logged_in');
+
 defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://mxmtsvrandon1/');
 //defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://localhost/');
+defined('LOGIN_URL')      or define('LOGIN_URL',  SERVER_PATH_URL . 'authentication/index.php/login?from=' . SERVER_PATH_URL . 'tiempos-muertos');
