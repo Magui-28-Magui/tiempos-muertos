@@ -49,14 +49,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['register']['post'] = "formcontroller/submit";
+
+//view
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['management'] = "managementcontroller/index";
+$route['management/edit'] = "managementcontroller/edit_ineffieciency";
 
+//add
+$route['management/add'] = "managementcontroller/addlines";
+$route['register']['post'] = "formcontroller/submit";
+
+//get
 $route['plants'] = "formcontroller/getplants";
 $route['lines'] = "formcontroller/getlines";
 $route['supervisor'] = "formcontroller/getsupervisor";
 $route['causes_code'] = "formcontroller/getcausescode";
 $route['get_data'] = "formcontroller/getdata";
+$route['error_message'] = "formcontroller/errormessage";
 
+//delete
+$route['lines/delete/(:any)'] = "managementcontroller/deleteline/$1";
+$route['causes_code/delete/(:any)'] = "managementcontroller/deletecause/$1";
+$route['inefficiency/delete/(:any)'] = "managementcontroller/deleteinefficiency/$1";
+$route['inefficiency/edit/(:any)'] = "managementcontroller/editinefficiency/$1";
+
+//Authentication
+$route['login'] = 'login/do_login';
+$route['logout'] = 'login/logout';

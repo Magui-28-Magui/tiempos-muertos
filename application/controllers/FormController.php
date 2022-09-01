@@ -18,6 +18,19 @@ class FormController extends CI_Controller
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/userguide3/general/urls.html
      */
+    
+	protected $user_email = NULL;
+	protected $user_name = NULL;
+	protected $user_lastname = NULL;
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->user_email = $this->session->userdata(EMAIL);
+		$this->user_name = $this->session->userdata(NAME);
+		$this->user_lastname = $this->session->userdata(LASTNAME);
+	}
 
     public function index()
     {
@@ -75,5 +88,11 @@ class FormController extends CI_Controller
             $this->session->set_flashdata('error_message', 'Ha ocurrido un error al realizar esta peticion');
         }
         redirect('/', 'refresh');
+    }
+    public function errorMessage()
+    {
+        $this->load->view('includes/header');
+        $this->load->view('error_message');
+        $this->load->view('includes/footer');
     }
 }

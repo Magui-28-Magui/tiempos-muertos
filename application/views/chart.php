@@ -1,4 +1,4 @@
-<div class="row">
+<!--<div class="row">
     <div class="col-md-4">
         <div class="mb-3">
             <label for="cause_code" class="form-label">Código de causas</label><span class="text-danger"> (*)</span>
@@ -32,4 +32,10 @@
     <div class="col-md-8">
         <canvas id="myChart" width="400" height="200"></canvas>
     </div>
+</div>-->
+<div class="h1 text-center text-uppercase mt-5 text-warning fw-bold">
+    En construcción
+</div>
+<div class="d-flex justify-content-center">
+    <img class="my-3" src="<?php echo base_url(); ?>assets/img/road-closure.gif" alt="construct">
 </div>

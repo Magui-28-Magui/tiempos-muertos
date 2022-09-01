@@ -15,7 +15,7 @@
         <div class="divider"></div>
         <div class="mb-3">
             <label for="date" class="form-label">Fecha</label><span class="text-danger"> (*)</span>
-            <input type="date" class="form-control" id="date" name="date" required>
+            <input type="date" class="form-control" id="date_register" name="date" required>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Información adicional</label>
@@ -27,16 +27,16 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="mb-3 my-2">
+        <!--<div class="mb-3 my-2">
             <label class="form-label">Area</label><span class="text-danger"> (*)</span>
             <select class="form-control" id="get_lines" name="area" required>
                 <option value="">Selecciona un area</option>
             </select>
-        </div>
+        </div>-->
         <div class="mb-3">
             <label for="planner_code" class="form-label">Planner code</label><span class="text-danger"> (*)</span>
             <input type="hidden" name="planner_codes" id="planner_codes" />
-            <select class="form-control selectpicker" name="planner_code" multiple id="get_planner_code" onchange="console.log(this.value)">
+            <select class="form-control selectpicker" name="planner_code" size="8" multiple id="get_planner_code">
             </select>
         </div>
         <div class="mb-3">

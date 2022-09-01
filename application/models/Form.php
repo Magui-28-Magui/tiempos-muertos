@@ -22,7 +22,7 @@ class Form extends CI_Model
 
         $data = array(
             'plant' => $this->input->post('plant'),
-            'area' => $this->input->post('area'),
+            //'area' => $this->input->post('area'),
             'supervisor' => $this->input->post('supervisor'),
             'planner_code' => $this->input->post('planner_codes'),
             'date' => $this->input->post('date'),
