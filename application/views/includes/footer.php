@@ -467,7 +467,7 @@
             $(".alert").slideUp(500);
         });
 
-        //document.getElementById("date_register").value = today;
+        document.getElementById("date_register").value = today;
     })
 
     managementTableCause();
