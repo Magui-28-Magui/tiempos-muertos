@@ -479,6 +479,7 @@
     }
 
     function deleteInefficiency(element) {
+        console.log(element)
         Swal.fire({
             title: 'Estás seguro de eliminar esta ineficiencia',
             text: "No podrás revertir este cambio",
