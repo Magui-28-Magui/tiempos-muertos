@@ -458,13 +458,12 @@
     if (day < 10) day = "0" + day;
 
     var today = year + "-" + month + "-" + day;
-    document.getElementById("date_register").value = today;
-
     $(document).ready(function() {
         $(".alert").fadeTo(2000, 500).slideUp(500, function() {
             $(".alert").slideUp(500);
         });
-    })
+        document.getElementById("date_register").value = today;
+    });
 
     $(document).ready(function() {
         $("body").tooltip({
