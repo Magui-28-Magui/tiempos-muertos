@@ -52,12 +52,42 @@ class Management extends CI_Model
     //Inefficiency
     public function editInefficiency($id)
     {
-        //$this->db->where('id', $id);
-        //$query = $this->db->get('register');
-        //$data = $query->result_array();
+        $query = $this->db->get_where("register", array('register_id' => $id));
+        return $query->row_array();
+    }
+    public function saveInefficiency($id)
+    {
+        
+        //get time
+        $time_minutes = $_POST['time'];
 
-        //return $data;
-        $query = $this->db->get_where("register", array('id' => $id));
-		return $query->row_array();
+        //divicion entre el tiempo y la cantidad de planner codes seleccionados 
+        $get_planner_code = $_POST['planner_code'];
+        if (is_string($get_planner_code)) {
+            $get_string = preg_split('/\s*,\s*/', $get_planner_code, PREG_SPLIT_NO_EMPTY);
+            $get_length_planner_code = count($get_string);
+            $result_planner_code = $time_minutes / $get_length_planner_code;
+            $result_hour = $result_planner_code / 60;
+        } else {
+            $get_length_planner_code = count($get_planner_code);
+            $result_planner_code = $time_minutes / $get_length_planner_code;
+            $result_hour = $result_planner_code / 60;
+        }
+
+        $data = array(
+            'plant' => $this->input->post('plant'),
+            'supervisor' => $this->input->post('supervisor'),
+            'planner_code' => $this->input->post('planner_code'),
+            'date' => $this->input->post('date'),
+            'description' => $this->input->post('description'),
+            'cause_code' => $this->input->post('cause_code'),
+            'machine' => $this->input->post('machine'),
+            'part_number' => $this->input->post('part_number'),
+            'time' => $result_planner_code,
+            'time_hour' => $result_hour,
+        );
+
+        $this->db->where('register_id', $id);
+		return $this->db->update("register", $data);
     }
 }

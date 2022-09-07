@@ -80,8 +80,6 @@ class FormController extends CI_Controller
     {
         $result = $this->Form->getSubmit($this->input->post);
 
-        echo $result;
-
         if ($result === true) {
             $this->session->set_flashdata('success_message', 'Se a agregado correctamente');
         } else {

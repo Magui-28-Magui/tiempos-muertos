@@ -35,6 +35,11 @@ class Home extends CI_Controller
     public function index()
     {
         $in = $this->session->flashdata('message_name');
+
+        $in['lines'] = $this->Lines->getLines();
+        $in['plant'] = $this->Plants->getPlants();
+        $in['causes_code'] = $this->CausesCode->getCausesCode();
+
         $this->load->view('includes/header');
         $this->load->view('home', $in);
         $this->load->view('includes/footer');

@@ -27,22 +27,30 @@
         </div>
     </div>
     <div class="col-md-6">
-        <!--<div class="mb-3 my-2">
-            <label class="form-label">Area</label><span class="text-danger"> (*)</span>
-            <select class="form-control" id="get_lines" name="area" required>
-                <option value="">Selecciona un area</option>
-            </select>
-        </div>-->
         <div class="mb-3">
-            <label for="planner_code" class="form-label">Planner code</label><span class="text-danger"> (*)</span>
-            <input type="hidden" name="planner_codes" id="planner_codes" />
-            <select class="form-control selectpicker" name="planner_code" size="8" multiple id="get_planner_code">
+            <div class="row">
+                <div class="col-md-6">
+                <label for="planner_code" class="form-label">Planner code</label><span class="text-danger"> (*)</span>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                <button type="button" class="btn btn-success mb-2" data-toggle="tooltip" data-bs-placement="left" title="Para filtrar planner code selecciona una planta">
+                <i class="fa fa-circle-question"></i>
+            </button>
+                </div>
+            </div>
+            <select class="form-control selectpicker" name="planner_code[]" size="8" multiple id="get_planner_code">
+                <?php foreach ($lines as $response) : ?>
+                    <option value="<?php echo $response["lines_id"] ?>"><?= $response['planner'] . " - " . $response['line_name'] ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="mb-3">
             <label for="cause_code" class="form-label">Código de causas</label><span class="text-danger"> (*)</span>
             <select class="form-control" id="cause_code" name="cause_code" required>
                 <option value="">Selecciona un código de causa</option>
+                <?php foreach ($causes_code as $response) : ?>
+                    <option value="<?php echo $response["cause_id"] ?>"><?= $response['code'] . " - " . $response['cause'] ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="mb-3">
