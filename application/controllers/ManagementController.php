@@ -104,4 +104,15 @@ class ManagementController extends CI_Controller
             $this->load->view('includes/footer');
         }
     }
+    public function saveEdit($id)
+    {
+        $result = $this->Management->saveInefficiency($id);
+
+        if ($result === true) {
+            $this->session->set_flashdata('success_message', 'Cambios realizados correctamente');
+        } else {
+            $this->session->set_flashdata('error_message', 'Ha ocurrido un error al realizar esta peticion');
+        }
+        redirect('/management', 'refresh');
+    }
 }

@@ -14,17 +14,21 @@ class Form extends CI_Model
         $time_minutes = $_POST['time'];
 
         //divicion entre el tiempo y la cantidad de planner codes seleccionados 
-        $get_planner_code = $_POST['planner_codes'];
-        $get_array_planner_code = preg_split("/\,/", $get_planner_code);
-        $get_length_planner_code = count($get_array_planner_code);
-        $result_planner_code = $time_minutes / $get_length_planner_code;
-        $result_hour = $result_planner_code / 60;
+        $get_planner_code = $_POST['planner_code'];
+        if (is_string($get_planner_code)) {
+            $get_string = preg_split('/\s*,\s*/', $get_planner_code, PREG_SPLIT_NO_EMPTY);
+            $get_length_planner_code = count($get_string);
+            $result_planner_code = $time_minutes / $get_length_planner_code;
+            $result_hour = $result_planner_code / 60;
+        } else {
+            $get_length_planner_code = count($get_planner_code);
+            $result_planner_code = $time_minutes / $get_length_planner_code;
+            $result_hour = $result_planner_code / 60;
+        }
 
         $data = array(
             'plant' => $this->input->post('plant'),
-            //'area' => $this->input->post('area'),
             'supervisor' => $this->input->post('supervisor'),
-            'planner_code' => $this->input->post('planner_codes'),
             'date' => $this->input->post('date'),
             'description' => $this->input->post('description'),
             'cause_code' => $this->input->post('cause_code'),
@@ -35,6 +39,7 @@ class Form extends CI_Model
         );
 
         for ($row = 0; $row < $get_length_planner_code; $row++) {
+            $data['planner_code'] = $this->input->post('planner_code')[$row];
             $this->db->insert('register', $data);
         }
         return true;
@@ -44,7 +49,13 @@ class Form extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('register');
+        $this->db->join('lines','lines.lines_id = register.planner_code','left');
+        $this->db->join('supervisores','supervisores.supervisor_id = register.supervisor','left');
+        $this->db->join('codigo_de_causa','codigo_de_causa.cause_id = register.cause_code','left');
+        
+        
         $query = $this->db->get();
+        
         return $query->result_array();
     }
 }

@@ -7,7 +7,7 @@
 </footer>
 
 <!-- Scripts -->
-<script src="<?php echo  base_url() ?>assets/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="<?php echo  base_url() ?>assets/datatables/DataTables-1.12.0/js/jquery.dataTables.min.js"></script>
@@ -39,32 +39,9 @@
 
     function getData(plant) {
         if (plant === 'planta 1' || plant === 'planta 2' || plant === 'planta 3') {
-            getLines(plant);
             getSupervisor(plant);
             getPlannerCode(plant);
         }
-    }
-
-    function getLines(get_plant) {
-        axios.get('<?= base_url() . 'index.php/lines' ?>').then(result => {
-            var select = document.getElementById("get_lines");
-
-            var area_filter = [];
-
-            if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
-                area_filter = result.data.filter(response => response.plant === get_plant);
-            }
-
-            select.innerHTML = "";
-            area_filter.forEach(value => {
-                var option = document.createElement('option');
-
-                option.innerHTML = value.line_name;
-                select.appendChild(option);
-            })
-        }).catch(error => {
-            console.log(error)
-        })
     }
 
     function getPlannerCode(get_plant) {
@@ -75,7 +52,7 @@
             var area_filter = [];
 
             if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
-                area_filter = result.data.filter(response => response.plant === get_plant);
+                area_filter = result.data.filter(response => response.lines_plant === get_plant);
             }
 
             select.innerHTML = "";
@@ -83,6 +60,7 @@
                 var option = document.createElement('option');
 
                 option.innerHTML = value.planner + '  -  ' + value.line_name;
+                option.value = value.lines_id; 
                 select.appendChild(option);
             })
         }).catch(error => {
@@ -98,7 +76,7 @@
             var area_filter = [];
 
             if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
-                area_filter = result.data.filter(response => response.plant === get_plant);
+                area_filter = result.data.filter(response => response.supervisor_plant === get_plant);
             }
 
             select.innerHTML = "";
@@ -121,7 +99,6 @@
             result.data.forEach(value => {
                 var option = document.createElement('option');
 
-                option.style = "font-size: 1rem";
                 option.innerHTML = value.code + ' ' + '-' + ' ' + value.cause;
                 select.appendChild(option);
             })
@@ -151,37 +128,48 @@
                     ],
                     responsive: true,
                     columns: [{
-                            title: 'ID'
+                            title: 'ID',
+                            data: 0
                         },
                         {
-                            title: 'Planta'
+                            title: 'Planta',
+                            data: 1
                         },
                         {
-                            title: 'Supervisor'
+                            title: 'Supervisor',
+                            data: 2
                         },
                         {
-                            title: 'Planner code'
+                            title: 'Planner code',
+                            data: 13
                         },
                         {
-                            title: 'Fecha'
+                            title: 'Fecha',
+                            data: 4
                         },
                         {
-                            title: 'Info. adicional'
+                            title: 'Info. adicional',
+                            data: 5
                         },
                         {
-                            title: 'Código de causa'
+                            title: 'Código de causa',
+                            data: 19
                         },
                         {
-                            title: 'Máquina'
+                            title: 'Máquina',
+                            data: 7
                         },
                         {
-                            title: 'No. Parte'
+                            title: 'No. Parte',
+                            data: 8
                         },
                         {
-                            title: 'Tiempo (Min)'
+                            title: 'Tiempo (Min)',
+                            data: 9
                         },
                         {
-                            title: 'Tiempo (Hrs)'
+                            title: 'Tiempo (Hrs)',
+                            data: 10
                         },
                     ],
                 });
@@ -196,6 +184,7 @@
 
             result.data.map((response) => {
                 arr.push(Object.values(response));
+                console.log(arr);
             })
 
             $(document).ready(function() {
@@ -206,54 +195,61 @@
                     ],
                     responsive: true,
                     columns: [{
-                            title: 'ID'
+                            title: 'ID',
+                            data: 0
                         },
                         {
-                            title: 'Planta'
+                            title: 'Planta',
+                            data: 1
                         },
                         {
-                            title: 'Supervisor'
+                            title: 'Supervisor',
+                            data: 2
                         },
                         {
-                            title: 'Planner code'
+                            title: 'Planner code',
+                            data: 13
                         },
                         {
-                            title: 'Fecha'
+                            title: 'Fecha',
+                            data: 4
                         },
                         {
-                            title: 'Info. adicional'
+                            title: 'Info. adicional',
+                            data: 5
                         },
                         {
-                            title: 'Código de causa'
+                            title: 'Código de causa',
+                            data: 19
                         },
                         {
-                            title: 'Máquina'
+                            title: 'Máquina',
+                            data: 7
                         },
                         {
-                            title: 'No. Parte'
+                            title: 'No. Parte',
+                            data: 8
                         },
                         {
-                            title: 'Tiempo (Min)'
+                            title: 'Tiempo (Min)',
+                            data: 9
                         },
                         {
-                            title: 'Tiempo (Hrs)'
+                            title: 'Tiempo (Hrs)',
+                            data: 10
                         },
                         {
                             title: 'Acciones',
                             className: "dt-center editor-delete",
                             render: function(data, type, row) {
-                                return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?=base_url().'index.php/inefficiency/edit/'?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a> <button type="button" onclick="deleteInefficiency(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button></div>';
+                                //return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a> <button type="button" onclick="deleteInefficiency(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button></div>';
+                                return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a>';
                             },
                             orderable: false
                         }
                     ],
                 });
             });
-        });
-    }
-    function editInefficiency(element){
-        axios.get('<?= base_url() . 'index.php/inefficiency/edit/' ?>' + element.id + '')(result => {
-            console.log(result);
         });
     }
 
@@ -462,18 +458,24 @@
     if (day < 10) day = "0" + day;
 
     var today = year + "-" + month + "-" + day;
+    document.getElementById("date_register").value = today;
+
     $(document).ready(function() {
         $(".alert").fadeTo(2000, 500).slideUp(500, function() {
             $(".alert").slideUp(500);
         });
-        document.getElementById("date_register").value = today;
     })
+
+    $(document).ready(function() {
+        $("body").tooltip({
+            selector: '[data-toggle=tooltip]'
+        });
+    });
 
     managementTableCause();
     managementTableArea();
     managementTable();
     loadTableData();
-    getCausesCode();
     getPlants();
 </script>
 </body>
