@@ -75,7 +75,7 @@ class Management extends CI_Model
         }
 
         $data = array(
-            'plant' => $this->input->post('edit_plant'),
+            'plant' => $this->input->post('plant'),
             'supervisor' => $this->input->post('supervisor'),
             'planner_code' => $this->input->post('planner_code'),
             'date' => $this->input->post('date'),

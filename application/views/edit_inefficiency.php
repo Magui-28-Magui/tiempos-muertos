@@ -6,7 +6,7 @@
             <div class="col-md-6">
                 <div class="mb-3 my-2">
                     <label class="form-label">Planta</label><span class="text-danger"> (*)</span>
-                    <select class="form-control" id="get_plants" name="plant" required>
+                    <select class="form-control" id="get_plant" name="plant" required>
                         <option value="">Selecciona una planta</option>
                         <?php foreach ($plants as $response) : ?>
                             <option <?php if ($result['plant'] === $response['name']) {
