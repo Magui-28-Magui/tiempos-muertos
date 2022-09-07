@@ -252,6 +252,80 @@
             });
         });
     }
+    function managementTableAdmin() {
+        axios.get('<?= base_url() . 'index.php/get_data' ?>').then(result => {
+
+            var arr = [];
+
+            result.data.map((response) => {
+                arr.push(Object.values(response));
+                console.log(arr);
+            })
+
+            $(document).ready(function() {
+                $('#management_table_admin').DataTable({
+                    data: arr,
+                    order: [
+                        [0, 'desc']
+                    ],
+                    responsive: true,
+                    columns: [{
+                            title: 'ID',
+                            data: 0
+                        },
+                        {
+                            title: 'Planta',
+                            data: 1
+                        },
+                        {
+                            title: 'Supervisor',
+                            data: 2
+                        },
+                        {
+                            title: 'Planner code',
+                            data: 13
+                        },
+                        {
+                            title: 'Fecha',
+                            data: 4
+                        },
+                        {
+                            title: 'Info. adicional',
+                            data: 5
+                        },
+                        {
+                            title: 'Código de causa',
+                            data: 19
+                        },
+                        {
+                            title: 'Máquina',
+                            data: 7
+                        },
+                        {
+                            title: 'No. Parte',
+                            data: 8
+                        },
+                        {
+                            title: 'Tiempo (Min)',
+                            data: 9
+                        },
+                        {
+                            title: 'Tiempo (Hrs)',
+                            data: 10
+                        },
+                        {
+                            title: 'Acciones',
+                            className: "dt-center editor-delete",
+                            render: function(data, type, row) {
+                                return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a> <button type="button" onclick="deleteInefficiency(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button></div>';
+                            },
+                            orderable: false
+                        }
+                    ],
+                });
+            });
+        });
+    }
 
     function managementTableCause() {
         axios.get('<?= base_url() . 'index.php/causes_code' ?>').then(result => {
@@ -473,6 +547,7 @@
 
     managementTableCause();
     managementTableArea();
+    managementTableAdmin();
     managementTable();
     loadTableData();
     getPlants();
