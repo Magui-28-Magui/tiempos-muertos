@@ -21,7 +21,7 @@ class Management extends CI_Model
     }
     public function deleteLine($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('lines_id', $id);
         $this->db->delete('lines');
         return true;
     }
@@ -39,13 +39,13 @@ class Management extends CI_Model
     }
     public function deleteCause($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('cause_id', $id);
         $this->db->delete('codigo_de_causa');
         return true;
     }
     public function deleteInefficiency($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('register_id', $id);
         $this->db->delete('register');
         return true;
     }
