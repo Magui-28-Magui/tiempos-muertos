@@ -22,6 +22,7 @@ class ManagementController extends CI_Controller
     protected $user_email = NULL;
     protected $user_name = NULL;
     protected $user_lastname = NULL;
+    protected $department_id = NULL;
 
 
     public function __construct()
@@ -30,9 +31,12 @@ class ManagementController extends CI_Controller
         $this->user_email = $this->session->userdata(EMAIL);
         $this->user_name = $this->session->userdata(NAME);
         $this->user_lastname = $this->session->userdata(LASTNAME);
+        $this->department_id = $this->session->userdata(DEPARTMENT_ID);
     }
     public function index()
     {
+        $data['department_id'] = $this->department_id;
+
         if ($this->user_email === NULL) {
             $this->load->view('includes/header');
             $this->load->view('includes/message');
@@ -42,7 +46,7 @@ class ManagementController extends CI_Controller
             $data['user_email'] = $this->user_email;
 
             $this->load->view('includes/header', $data);
-            $this->load->view('management');
+            $this->load->view('management', $data);
             $this->load->view('includes/footer');
         }
     }
@@ -88,6 +92,8 @@ class ManagementController extends CI_Controller
     {
         $data['id'] = $id;
         $data['user_email'] = $this->user_email;
+        $data['department_id'] = $this->department_id;
+
         $data['lines'] = $this->Lines->getLines();
         $data['plants'] = $this->Plants->getPlants();
         $data['supervisor'] = $this->Supervisor->getSupervisor();

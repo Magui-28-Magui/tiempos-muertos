@@ -16,12 +16,14 @@
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" href="#listado" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Listado de ineficiencias</a>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" href="#area" id="pills-area-tab" data-bs-toggle="pill" data-bs-target="#pills-area" type="button" role="tab" aria-controls="pills-area" aria-selected="false">Agregar area</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" href="#causas" id="pills-cause-interruption-tab" data-bs-toggle="pill" data-bs-target="#pills-cause-interruption" type="button" role="tab" aria-controls="pills-cause-interruption" aria-selected="false">Agregar causa de interrupción</a>
-                </li>
+                <?php if ($department_id == 1) : ?>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#area" id="pills-area-tab" data-bs-toggle="pill" data-bs-target="#pills-area" type="button" role="tab" aria-controls="pills-area" aria-selected="false">Agregar area</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#causas" id="pills-cause-interruption-tab" data-bs-toggle="pill" data-bs-target="#pills-cause-interruption" type="button" role="tab" aria-controls="pills-cause-interruption" aria-selected="false">Agregar causa de interrupción</a>
+                    </li>
+                <?php endif ?>
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
