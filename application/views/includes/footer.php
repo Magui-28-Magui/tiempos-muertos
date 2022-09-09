@@ -60,7 +60,7 @@
                 var option = document.createElement('option');
 
                 option.innerHTML = value.planner + '  -  ' + value.line_name;
-                option.value = value.lines_id; 
+                option.value = value.lines_id;
                 select.appendChild(option);
             })
         }).catch(error => {
@@ -113,6 +113,7 @@
             var arr = [];
 
             result.data.map((response) => {
+                console.log(arr)
                 arr.push(Object.values(response));
             })
 
@@ -171,6 +172,14 @@
                             title: 'Tiempo (Hrs)',
                             data: 10
                         },
+                        {
+                            title: 'Categoria',
+                            data: 21
+                        },
+                        {
+                            title: 'Causa',
+                            data: 20
+                        },
                     ],
                 });
             });
@@ -184,7 +193,6 @@
 
             result.data.map((response) => {
                 arr.push(Object.values(response));
-                console.log(arr);
             })
 
             $(document).ready(function() {
@@ -252,6 +260,7 @@
             });
         });
     }
+
     function managementTableAdmin() {
         axios.get('<?= base_url() . 'index.php/get_data' ?>').then(result => {
 
@@ -259,7 +268,6 @@
 
             result.data.map((response) => {
                 arr.push(Object.values(response));
-                console.log(arr);
             })
 
             $(document).ready(function() {
@@ -479,7 +487,6 @@
     }
 
     function deleteInefficiency(element) {
-        console.log(element)
         Swal.fire({
             title: 'Estás seguro de eliminar esta ineficiencia',
             text: "No podrás revertir este cambio",
@@ -546,11 +553,55 @@
         });
     });
 
+    function getChartData() {
+        axios.get('<?= base_url() . "index.php/get_data" ?>').then(result => {
+            var arr_planner = [];
+
+            result.data.map((response) => {
+                console.log(response);
+                arr_planner.push(response.cause);
+            });
+
+            //eliminar planner codes repetidos
+            var new_value = arr_planner.reduce((ant, curr) => {
+                if (ant.findIndex((a) => a == curr) == -1) {
+                    ant.push(curr);
+                }
+                return ant;
+            }, []);
+
+            new Chart(document.getElementById("myChart"), {
+                type: 'bar',
+                data: {
+                    labels: new_value,
+                    datasets: [{
+                        label: "QTY",
+                        type: "line",
+                        backgroundColor:  'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                        data: [12296, 12381, 9141, 24203, 21987, 21801, 65394, 91892, 57645, 44637, 22631, 17502]
+                    }, {
+                        label: "ACCUM",
+                        type: "bar",
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        fill: true,
+                        data: [299405, 244029, 247191, 329711, 273855, 441914, 426271, 471912, 374388, 366864, 326155, 277442]
+                    }]
+                },
+            });
+        })
+    }
+
     managementTableCause();
     managementTableArea();
     managementTableAdmin();
     managementTable();
     loadTableData();
+    getChartData();
     getPlants();
 </script>
 </body>

@@ -13,7 +13,7 @@
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Planta</label><span class="text-danger"> (*)</span>
-            <select class="form-control" id="get_plants" name="plant" required onchange="getData(this.value, '')">
+            <select class="form-control" id="get_plants" name="lines_plant" required onchange="getData(this.value, '')">
                 <option value="">Selecciona una planta</option>
             </select>
         </div>
