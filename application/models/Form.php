@@ -44,7 +44,6 @@ class Form extends CI_Model
         }
         return true;
     }
-
     public function getData()
     {
         $this->db->select('*');
@@ -53,6 +52,18 @@ class Form extends CI_Model
         $this->db->join('supervisores','supervisores.supervisor_id = register.supervisor','left');
         $this->db->join('codigo_de_causa','codigo_de_causa.cause_id = register.cause_code','left');
         
+        $query = $this->db->get();
+        
+        return $query->result_array();
+    }
+    public function getDataWeek()
+    {
+        $this->db->select('*');
+        $this->db->from('register');
+        $this->db->join('lines','lines.lines_id = register.planner_code','left');
+        $this->db->join('supervisores','supervisores.supervisor_id = register.supervisor','left');
+        $this->db->join('codigo_de_causa','codigo_de_causa.cause_id = register.cause_code','left');
+        //$this->db->where('register.date');
         
         $query = $this->db->get();
         

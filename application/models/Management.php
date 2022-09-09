@@ -12,7 +12,7 @@ class Management extends CI_Model
     public function addLine($data)
     {
         $data = array(
-            'plant' => $this->input->post('plant'),
+            'lines_plant' => $this->input->post('lines_plant'),
             'line_name' => $this->input->post('line_name'),
             'planner' => $this->input->post('planner'),
         );
