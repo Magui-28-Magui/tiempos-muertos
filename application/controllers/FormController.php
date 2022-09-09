@@ -31,7 +31,6 @@ class FormController extends CI_Controller
 		$this->user_name = $this->session->userdata(NAME);
 		$this->user_lastname = $this->session->userdata(LASTNAME);
 	}
-
     public function index()
     {
     }
@@ -41,28 +40,24 @@ class FormController extends CI_Controller
 
         echo json_encode($result);
     }
-
     public function getLines()
     {
         $result = $this->Lines->getLines();
 
         echo json_encode($result);
     }
-
     public function getSupervisor()
     {
         $result = $this->Supervisor->getSupervisor();
 
         echo json_encode($result);
     }
-
     public function getCausesCode()
     {
         $result = $this->CausesCode->getCausesCode();
 
         echo json_encode($result);
     }
-
     public function getMachine()
     {
         $result = $this->Plants->getPlants();
@@ -75,7 +70,6 @@ class FormController extends CI_Controller
 
         echo json_encode($result);
     }
-
     public function submit()
     {
         $result = $this->Form->getSubmit($this->input->post);
