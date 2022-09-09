@@ -113,7 +113,6 @@
             var arr = [];
 
             result.data.map((response) => {
-                console.log(arr)
                 arr.push(Object.values(response));
             })
 
@@ -178,7 +177,7 @@
                         },
                         {
                             title: 'Causa',
-                            data: 20
+                            data: 22
                         },
                     ],
                 });
