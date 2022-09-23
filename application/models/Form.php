@@ -7,7 +7,6 @@ class Form extends CI_Model
     {
         $this->load->database();
     }
-
     public function getSubmit($data)
     {
         //get time
@@ -48,23 +47,28 @@ class Form extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('register');
-        $this->db->join('lines','lines.lines_id = register.planner_code','left');
-        $this->db->join('supervisores','supervisores.supervisor_id = register.supervisor','left');
-        $this->db->join('codigo_de_causa','codigo_de_causa.cause_id = register.cause_code','left');
-        
+        $this->db->join('lines', 'lines.lines_id = register.planner_code', 'left');
+        $this->db->join('supervisores', 'supervisores.supervisor_id = register.supervisor', 'left');
+        $this->db->join('codigo_de_causa', 'codigo_de_causa.cause_id = register.cause_code', 'left');
+
         $query = $this->db->get();
-        
+
         return $query->result_array();
     }
-    public function getDataWeek()
+    public function getDataWeek($plant, $supervisor)
     {
-        $this->db->select('*');
+        $this->db->select('register.cause_code, register.plant, register.supervisor, codigo_de_causa.cause, SUM(register.time_hour) as `time_hour`');
         $this->db->from('register');
-        $this->db->join('lines','lines.lines_id = register.planner_code','left');
-        $this->db->join('supervisores','supervisores.supervisor_id = register.supervisor','left');
-        $this->db->join('codigo_de_causa','codigo_de_causa.cause_id = register.cause_code','left');
-        //$this->db->where('register.date');
-        
+        $this->db->join('codigo_de_causa', 'codigo_de_causa.cause_id = register.cause_code', 'left');
+        $this->db->group_by('register.cause_code');
+        $this->db->order_by('time_hour', 'desc');
+        if (!empty($plant)) {
+            $this->db->where('register.plant', $plant);
+        }
+        if(!empty($supervisor)){
+            $this->db->where('register.supervisor', $supervisor);
+        }
+
         $query = $this->db->get();
         
         return $query->result_array();

@@ -25,7 +25,21 @@
         axios.get('<?= base_url() . 'index.php/plants' ?>').then(result => {
 
             var select = document.getElementById("get_plants");
+            result.data.forEach(value => {
+                var option = document.createElement('option');
 
+                option.innerHTML = value.name;
+                select.appendChild(option);
+            })
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    function getPlantsChart() {
+        axios.get('<?= base_url() . 'index.php/plants' ?>').then(result => {
+
+            var select = document.getElementById("chart_plant");
             result.data.forEach(value => {
                 var option = document.createElement('option');
 
@@ -61,6 +75,21 @@
 
                 option.innerHTML = value.planner + '  -  ' + value.line_name;
                 option.value = value.lines_id;
+                select.appendChild(option);
+            })
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    function getSupervisorChart() {
+        axios.get('<?= base_url() . 'index.php/supervisor' ?>').then(result => {
+
+            var select = document.getElementById("get_supervisor_chart");
+            result.data.forEach(value => {
+                var option = document.createElement('option');
+
+                option.innerHTML = value.name;
                 select.appendChild(option);
             })
         }).catch(error => {
@@ -552,53 +581,142 @@
         });
     });
 
-    function getChartData() {
-        axios.get('<?= base_url() . "index.php/get_data" ?>').then(result => {
-            var arr_planner = [];
+    function clearfield() {
+        document.getElementById('chart_plant').value = "";
+        document.getElementById('get_supervisor_chart').value = "";
 
+        getChartData();
+    }
+
+    function buttonChartFilter() {
+        var get_plant = document.getElementById('chart_plant');
+        var get_supervisor = document.getElementById('get_supervisor_chart');
+
+        var plant = get_plant.value;
+        var supervisor = get_supervisor.value;
+
+        getChartData(plant, supervisor);
+    }
+
+    function getChartData(plant, supervisor) {
+
+        if (plant === undefined && supervisor === undefined) {
+            plant = "";
+            supervisor = "";
+        }
+
+        var URL = '<?= base_url() . "index.php/get_data_week" ?>' + '?';
+        URL += 'plant=' + encodeURIComponent(plant);
+        URL += '&supervisor=' + encodeURIComponent(supervisor);
+
+        axios.get(URL).then(result => {
+
+            //variables
+            var myChart;
+            var arr_qty = [];
+            var arr_cause = [];
+            var arr_accum = [];
+            var arr_plant = [];
+            var total_frecuencia = 0;
+            var frecuencia_acumulada = 0;
+            var frecuencia_individual = 0;
+            var arr_frecuencia_individual = [];
+
+            //Crear arreglos con data
             result.data.map((response) => {
-                console.log(response);
-                arr_planner.push(response.cause);
+                arr_cause.push(response.cause);
+                arr_qty.push(response.time_hour);
             });
 
-            //eliminar planner codes repetidos
-            var new_value = arr_planner.reduce((ant, curr) => {
-                if (ant.findIndex((a) => a == curr) == -1) {
-                    ant.push(curr);
-                }
-                return ant;
-            }, []);
+            //sumar total de time_hour
+            for (var i = 0; i < arr_qty.length; i++) {
+                total_frecuencia += Number(arr_qty[i]);
+            }
 
-            new Chart(document.getElementById("myChart"), {
+            //operaciones para grafica
+            for (var i = 0; i < arr_qty.length; i++) {
+                frecuencia_individual = arr_qty[i] * 100 / total_frecuencia;
+                arr_frecuencia_individual.push(frecuencia_individual);
+                frecuencia_acumulada += frecuencia_individual;
+                arr_accum.push(frecuencia_acumulada);
+            }
+
+            //grafica
+            var ctx = document.getElementById('myChart').getContext('2d');
+            let chartStatus = Chart.getChart("myChart");
+            if (chartStatus != undefined) {
+                chartStatus.destroy();
+            }
+            myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: new_value,
+                    labels: arr_cause,
                     datasets: [{
-                        label: "QTY",
-                        type: "line",
-                        backgroundColor:  'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1,
-                        fill: false,
-                        data: [12296, 12381, 9141, 24203, 21987, 21801, 65394, 91892, 57645, 44637, 22631, 17502]
-                    }, {
                         label: "ACCUM",
+                        type: "line",
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        bordcerWidth: 2,
+                        fill: false,
+                        data: arr_accum,
+                        yAxisID: 'y1',
+                    }, {
+                        label: "QTY",
                         type: "bar",
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1,
+                        borderWidth: 2,
                         fill: true,
-                        data: [299405, 244029, 247191, 329711, 273855, 441914, 426271, 471912, 374388, 366864, 326155, 277442]
-                    }]
+                        data: arr_qty,
+                        yAxisID: 'y',
+                    }],
                 },
-            });
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    stacked: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            ticks: {
+                                beginAtZero: true,
+                                color: 'rgba(54, 162, 235, 1)'
+                            },
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                                color: 'rgba(255, 99, 132, 1)'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        },
+                    }
+                },
+            })
         })
     }
 
+    managementTableAdmin();
     managementTableCause();
     managementTableArea();
-    managementTableAdmin();
+    getSupervisorChart();
     managementTable();
+    getPlantsChart();
     loadTableData();
     getChartData();
     getPlants();

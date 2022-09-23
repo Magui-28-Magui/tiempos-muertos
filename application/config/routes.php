@@ -67,6 +67,7 @@ $route['lines'] = "formcontroller/getlines";
 $route['supervisor'] = "formcontroller/getsupervisor";
 $route['causes_code'] = "formcontroller/getcausescode";
 $route['get_data'] = "formcontroller/getdata";
+$route['get_data_week'] = "formcontroller/getdataweek";
 $route['error_message'] = "formcontroller/errormessage";
 
 //delete
