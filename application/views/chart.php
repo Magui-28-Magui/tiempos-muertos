@@ -1,13 +1,14 @@
 <div class="row">
     <div class="col-md-12">
+        <h3 id="get_week_text" class="d-flex justify-content-end fw-bold"></h3>
         <div class="row">
             <div class="col-md-6 mt-3">
                 <label class="form-label">Semana</label>
-                <input type="week" class="form-control">
+                <input type="week" class="form-control" id="date_week">
             </div>
             <div class="col-md-6 mt-3">
                 <label class="form-label">Mes</label>
-                <input type="month" class="form-control">
+                <input type="month" class="form-control" id="date_month">
             </div>
         </div>
         <div class="row">
@@ -27,8 +28,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end my-3">
-                    <button class="btn btn-secondary me-md-2" type="button" onclick="clearfield()"><i class="fa-solid fa-eraser"></i></button>
-                    <button class="btn btn-success" type="button" onclick="buttonChartFilter()"><i class="fa-solid fa-filter"></i></button>
+                    <button class="btn btn-secondary me-md-2" type="button" onclick="clearfield()"><i class="fa-solid fa-eraser mx-1"></i>Borrar Filtrado</button>
+                    <button class="btn btn-success" type="button" onclick="buttonChartFilter()"><i class="fa-solid fa-filter mx-1"></i>Filtrar</button>
                 </div>
             </div>
         </div>

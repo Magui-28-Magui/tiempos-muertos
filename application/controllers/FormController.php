@@ -72,10 +72,12 @@ class FormController extends CI_Controller
     }
     public function getDataWeek()
     {
+        $week =  $this->input->get('week');
         $plant =  $this->input->get('plant');
+        $month =  $this->input->get('month');
         $supervisor =  $this->input->get('supervisor');
 
-        $result = $this->Form->getDataWeek($plant, $supervisor);
+        $result = $this->Form->getDataWeek($plant, $supervisor, $month, $week);
 
         echo json_encode($result);
     }

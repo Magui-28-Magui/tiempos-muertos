@@ -568,11 +568,34 @@
     if (day < 10) day = "0" + day;
 
     var today = year + "-" + month + "-" + day;
+    var month_and_year = year + "-" + month;
+
+    // get weekday
+    startDate = new Date(date.getFullYear(), 0, 1);
+    var days = Math.floor((date - startDate) /
+        (24 * 60 * 60 * 1000));
+
+    var weekNumber = Math.ceil(days / 7);
+
     $(document).ready(function() {
         $(".alert").fadeTo(2000, 500).slideUp(500, function() {
             $(".alert").slideUp(500);
         });
         document.getElementById("date_register").value = today;
+
+        document.getElementById("date_month").value = month_and_year;
+
+        var get_text_week = document.getElementById("get_week_text");
+        var text = document.createTextNode("Semana número: " + weekNumber);
+        get_text_week.appendChild(text);
+
+        //var get_text_accum = document.getElementById("get_cause_text");
+        //var text_accum = document.createTextNode("Acumulado total: ");
+        //get_text_accum.appendChild(text_accum);
+
+        //var get_text_qty = document.getElementById("get_qty_text");
+        //var text_qty = document.createTextNode("Cantidad total: ");
+        //get_text_qty.appendChild(text_qty);
     });
 
     $(document).ready(function() {
@@ -590,27 +613,35 @@
 
     function buttonChartFilter() {
         var get_plant = document.getElementById('chart_plant');
+        var get_week_date = document.getElementById('date_week');
+        var get_month_date = document.getElementById('date_month');
         var get_supervisor = document.getElementById('get_supervisor_chart');
 
         var plant = get_plant.value;
+        var week = get_week_date.value;
+        var month = get_month_date.value;
         var supervisor = get_supervisor.value;
+        var new_value_week = week.replace('-W', '');
 
-        getChartData(plant, supervisor);
+        getChartData(plant, supervisor, month, new_value_week);
     }
 
-    function getChartData(plant, supervisor) {
+    function getChartData(plant, supervisor, month, new_value_week) {
 
-        if (plant === undefined && supervisor === undefined) {
-            plant = "";
+        if (plant === undefined && supervisor === undefined && month === undefined && new_value_week === undefined) {
             supervisor = "";
+            plant = "";
+            month = "";
+            new_value_week = "";
         }
 
         var URL = '<?= base_url() . "index.php/get_data_week" ?>' + '?';
         URL += 'plant=' + encodeURIComponent(plant);
+        URL += '&week=' + encodeURIComponent(new_value_week);
+        URL += '&month=' + encodeURIComponent(month);
         URL += '&supervisor=' + encodeURIComponent(supervisor);
 
         axios.get(URL).then(result => {
-
             //variables
             var myChart;
             var arr_qty = [];

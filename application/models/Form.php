@@ -55,9 +55,12 @@ class Form extends CI_Model
 
         return $query->result_array();
     }
-    public function getDataWeek($plant, $supervisor)
+    public function getDataWeek($plant, $supervisor, $month, $week)
     {
-        $this->db->select('register.cause_code, register.plant, register.supervisor, codigo_de_causa.cause, SUM(register.time_hour) as `time_hour`');
+        $start_date = date('Y-m-d', strtotime($month . 'first day of this month'));
+        $end_date =  date('Y-m-d', strtotime($month . 'last day of this month'));
+
+        $this->db->select('register.cause_code, register.plant, register.supervisor, register.date, codigo_de_causa.cause, SUM(register.time_hour) as `time_hour`');
         $this->db->from('register');
         $this->db->join('codigo_de_causa', 'codigo_de_causa.cause_id = register.cause_code', 'left');
         $this->db->group_by('register.cause_code');
@@ -65,12 +68,18 @@ class Form extends CI_Model
         if (!empty($plant)) {
             $this->db->where('register.plant', $plant);
         }
-        if(!empty($supervisor)){
+        if (!empty($supervisor)) {
             $this->db->where('register.supervisor', $supervisor);
         }
-
+        if (!empty($month)) {
+            $this->db->where('register.date >=', $start_date);
+            $this->db->where('register.date <=', $end_date);
+        }
+        if (!empty($week)) {
+            $this->db->where('YEARWEEK(register.date) =', $week);
+        }
         $query = $this->db->get();
-        
+
         return $query->result_array();
     }
 }
