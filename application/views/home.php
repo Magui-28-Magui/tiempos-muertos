@@ -27,9 +27,23 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <?php echo form_open('formcontroller/submit'); ?>
                     <?php require_once('register.php') ?>
-                    <?php echo form_close() ?> 
+                    <?php echo form_close() ?>
                 </div>
                 <div class="tab-pane fade" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
+                    <div class="row my-4">
+                        <div class="col-md-6">
+                            <label for="table_start_date">Fecha inicio</label>
+                            <input type="date" id="table_start_date" name="table_start_date" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="table_end_date">Fecha fin</label>
+                            <input type="date" id="table_end_date" name="table_end_date" class="form-control">
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end my-3">
+                            <button id="button_clear" class="btn btn-secondary me-md-2" type="button" onclick="clearfieldTable()"><i class="fa-solid fa-eraser mx-1"></i>Borrar Filtrado</button>
+                            <button class="btn btn-success" type="button" onclick="filterTable()"><i class="fa-solid fa-filter mx-1"></i>Filtrar</button>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table display text-center p-0" id="table_id" style="width: 100%;">
                         </table>

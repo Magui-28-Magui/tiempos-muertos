@@ -136,8 +136,35 @@
         })
     }
 
-    function loadTableData() {
-        axios.get('<?= base_url() . 'index.php/get_data' ?>').then(result => {
+    function clearfieldTable() {
+        document.getElementById('table_start_date').value = "";
+        document.getElementById('table_end_date').value = "";
+
+        loadTableData();
+    }
+
+    function filterTable() {
+        var get_start_date = document.getElementById("table_start_date");
+        var get_end_date = document.getElementById("table_end_date");
+
+        start_date = get_start_date.value;
+        end_date = get_end_date.value;
+
+        loadTableData(start_date, end_date);
+    }
+
+    function loadTableData(start_date, end_date) {
+
+        if (start_date === undefined && end_date === undefined) {
+            start_date = "";
+            end_date = "";
+        }
+
+        var URL = '<?= base_url() . "index.php/get_data" ?>' + '?';
+        URL += 'start_date=' + encodeURIComponent(start_date);
+        URL += '&end_date=' + encodeURIComponent(end_date);
+
+        axios.get(URL).then(result => {
 
             var arr = [];
 
@@ -145,71 +172,75 @@
                 arr.push(Object.values(response));
             })
 
-            $(document).ready(function() {
-                $('#table_id').DataTable({
-                    data: arr,
-                    order: [
-                        [0, 'desc']
-                    ],
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'print'
-                    ],
-                    responsive: true,
-                    columns: [{
-                            title: 'ID',
-                            data: 0
-                        },
-                        {
-                            title: 'Planta',
-                            data: 1
-                        },
-                        {
-                            title: 'Supervisor',
-                            data: 2
-                        },
-                        {
-                            title: 'Planner code',
-                            data: 13
-                        },
-                        {
-                            title: 'Fecha',
-                            data: 4
-                        },
-                        {
-                            title: 'Info. adicional',
-                            data: 5
-                        },
-                        {
-                            title: 'Código de causa',
-                            data: 19
-                        },
-                        {
-                            title: 'Máquina',
-                            data: 7
-                        },
-                        {
-                            title: 'No. Parte',
-                            data: 8
-                        },
-                        {
-                            title: 'Tiempo (Min)',
-                            data: 9
-                        },
-                        {
-                            title: 'Tiempo (Hrs)',
-                            data: 10
-                        },
-                        {
-                            title: 'Categoria',
-                            data: 21
-                        },
-                        {
-                            title: 'Causa',
-                            data: 22
-                        },
-                    ],
-                });
+            $('#table_id').DataTable({
+                dom: 'Bfrtip',
+                stateSave: true,
+                destroy: true,
+                data: arr,
+                order: [
+                    [0, 'desc']
+                ],
+                buttons: [
+                    'copy', 'csv', 'excel', 'print'
+                ],
+                responsive: true,
+                columns: [{
+                        title: 'ID',
+                        data: 0
+                    },
+                    {
+                        title: 'Planta',
+                        data: 1
+                    },
+                    {
+                        title: 'Supervisor',
+                        data: 2
+                    },
+                    {
+                        title: 'Planner code',
+                        data: 13
+                    },
+                    {
+                        title: 'Fecha',
+                        data: 4
+                    },
+                    {
+                        title: 'Info. adicional',
+                        data: 5
+                    },
+                    {
+                        title: 'Código de causa',
+                        data: 19
+                    },
+                    {
+                        title: 'Máquina',
+                        data: 7
+                    },
+                    {
+                        title: 'No. Parte',
+                        data: 8
+                    },
+                    {
+                        title: 'Tiempo (Min)',
+                        data: 9
+                    },
+                    {
+                        title: 'Tiempo (Hrs)',
+                        data: 10
+                    },
+                    {
+                        title: 'Categoria',
+                        data: 21
+                    },
+                    {
+                        title: 'Causa',
+                        data: 22
+                    },
+                    {
+                        title: 'Semana',
+                        data: 23
+                    },
+                ],
             });
         });
     }
@@ -583,19 +614,11 @@
         });
         document.getElementById("date_register").value = today;
 
-        document.getElementById("date_month").value = month_and_year;
+        //document.getElementById("date_month").value = month_and_year;
 
-        var get_text_week = document.getElementById("get_week_text");
-        var text = document.createTextNode("Semana número: " + weekNumber);
-        get_text_week.appendChild(text);
-
-        //var get_text_accum = document.getElementById("get_cause_text");
-        //var text_accum = document.createTextNode("Acumulado total: ");
-        //get_text_accum.appendChild(text_accum);
-
-        //var get_text_qty = document.getElementById("get_qty_text");
-        //var text_qty = document.createTextNode("Cantidad total: ");
-        //get_text_qty.appendChild(text_qty);
+        //var get_text_week = document.getElementById("get_week_text");
+        //var text = document.createTextNode("Semana número: " + weekNumber);
+        //get_text_week.appendChild(text);
     });
 
     $(document).ready(function() {
@@ -606,6 +629,9 @@
 
     function clearfield() {
         document.getElementById('chart_plant').value = "";
+        document.getElementById('date_week').value = "";
+        document.getElementById('date_month').value = "";
+        document.getElementById('planner_chart').value = "";
         document.getElementById('get_supervisor_chart').value = "";
 
         getChartData();
@@ -616,22 +642,25 @@
         var get_week_date = document.getElementById('date_week');
         var get_month_date = document.getElementById('date_month');
         var get_supervisor = document.getElementById('get_supervisor_chart');
+        var get_planner_code = document.getElementById('planner_chart');
 
         var plant = get_plant.value;
         var week = get_week_date.value;
         var month = get_month_date.value;
         var supervisor = get_supervisor.value;
+        var planner_code = get_planner_code.value;
         var new_value_week = week.replace('-W', '');
 
-        getChartData(plant, supervisor, month, new_value_week);
+        getChartData(plant, supervisor, month, new_value_week, planner_code);
     }
 
-    function getChartData(plant, supervisor, month, new_value_week) {
+    function getChartData(plant, supervisor, month, new_value_week, planner_code) {
 
         if (plant === undefined && supervisor === undefined && month === undefined && new_value_week === undefined) {
             supervisor = "";
             plant = "";
             month = "";
+            planner_code = "";
             new_value_week = "";
         }
 
@@ -639,9 +668,11 @@
         URL += 'plant=' + encodeURIComponent(plant);
         URL += '&week=' + encodeURIComponent(new_value_week);
         URL += '&month=' + encodeURIComponent(month);
+        URL += '&planner_code=' + encodeURIComponent(planner_code);
         URL += '&supervisor=' + encodeURIComponent(supervisor);
 
         axios.get(URL).then(result => {
+
             //variables
             var myChart;
             var arr_qty = [];
@@ -678,6 +709,7 @@
             if (chartStatus != undefined) {
                 chartStatus.destroy();
             }
+
             myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -712,6 +744,8 @@
                     plugins: {
                         title: {
                             display: true,
+                            text: 'Semana: ' + weekNumber + ' Acumulado :' + total_frecuencia.toFixed(2),
+                        position: 'top'
                         }
                     },
                     scales: {
@@ -736,11 +770,22 @@
                                 drawOnChartArea: false,
                             },
                         },
-                    }
+                    },
                 },
             })
         })
     }
+
+    //function getTextPage(total_frecuencia, frecuencia_acumulada) {
+
+    //    var get_text_accum = document.getElementById("get_accum_text");
+    //    var text_accum = document.createTextNode("Acumulado total: " + total_frecuencia.toFixed(2));
+    //    get_text_accum.appendChild(text_accum);
+
+    //    var get_text_qty = document.getElementById("get_qty_text");
+    //    var text_qty = document.createTextNode("Cantidad total: " + frecuencia_acumulada.toFixed(2));
+    //    get_text_qty.appendChild(text_qty);
+    //}
 
     managementTableAdmin();
     managementTableCause();
@@ -750,6 +795,7 @@
     getPlantsChart();
     loadTableData();
     getChartData();
+    //getTextPage()
     getPlants();
 </script>
 </body>

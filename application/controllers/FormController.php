@@ -66,7 +66,10 @@ class FormController extends CI_Controller
     }
     public function getData()
     {
-        $result = $this->Form->getData();
+        $start_date =  $this->input->get('start_date');
+        $end_date =  $this->input->get('end_date');
+
+        $result = $this->Form->getData($start_date, $end_date);
 
         echo json_encode($result);
     }
@@ -76,8 +79,9 @@ class FormController extends CI_Controller
         $plant =  $this->input->get('plant');
         $month =  $this->input->get('month');
         $supervisor =  $this->input->get('supervisor');
+        $planner_code =  $this->input->get('planner_code');
 
-        $result = $this->Form->getDataWeek($plant, $supervisor, $month, $week);
+        $result = $this->Form->getDataWeek($plant, $supervisor, $month, $week, $planner_code);
 
         echo json_encode($result);
     }
