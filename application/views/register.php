@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="mb-3 my-2">
             <label class="form-label">Planta</label><span class="text-danger"> (*)</span>
-            <select class="form-control" id="get_plants" name="plant" required onchange="getData(this.value, '')">
+            <select class="form-control" id="get_plants" name="plant_select" required onchange="getData(this.value, '')">
                 <option value="">Selecciona una planta</option>
             </select>
         </div>
@@ -30,12 +30,12 @@
         <div class="mb-3">
             <div class="row">
                 <div class="col-md-6">
-                <label for="planner_code" class="form-label">Planner code</label><span class="text-danger"> (*)</span>
+                    <label for="planner_code" class="form-label">Planner code</label><span class="text-danger"> (*)</span>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
-                <button type="button" class="btn btn-success mb-2" data-toggle="tooltip" data-bs-placement="left" title="Para filtrar planner code selecciona una planta">
-                <i class="fa fa-circle-question"></i>
-            </button>
+                    <button type="button" class="btn btn-success mb-2" data-toggle="tooltip" data-bs-placement="left" title="Para filtrar planner code selecciona una planta">
+                        <i class="fa fa-circle-question"></i>
+                    </button>
                 </div>
             </div>
             <select class="form-control selectpicker" name="planner_code[]" size="8" multiple id="get_planner_code">

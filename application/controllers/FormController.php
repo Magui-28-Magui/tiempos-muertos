@@ -18,19 +18,19 @@ class FormController extends CI_Controller
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/userguide3/general/urls.html
      */
-    
-	protected $user_email = NULL;
-	protected $user_name = NULL;
-	protected $user_lastname = NULL;
+
+    protected $user_email = NULL;
+    protected $user_name = NULL;
+    protected $user_lastname = NULL;
 
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->user_email = $this->session->userdata(EMAIL);
-		$this->user_name = $this->session->userdata(NAME);
-		$this->user_lastname = $this->session->userdata(LASTNAME);
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->user_email = $this->session->userdata(EMAIL);
+        $this->user_name = $this->session->userdata(NAME);
+        $this->user_lastname = $this->session->userdata(LASTNAME);
+    }
     public function index()
     {
     }
@@ -66,7 +66,22 @@ class FormController extends CI_Controller
     }
     public function getData()
     {
-        $result = $this->Form->getData();
+        $start_date =  $this->input->get('start_date');
+        $end_date =  $this->input->get('end_date');
+
+        $result = $this->Form->getData($start_date, $end_date);
+
+        echo json_encode($result);
+    }
+    public function getDataWeek()
+    {
+        $week =  $this->input->get('week');
+        $plant =  $this->input->get('plant');
+        $month =  $this->input->get('month');
+        $supervisor =  $this->input->get('supervisor');
+        $planner_code =  $this->input->get('planner_code');
+
+        $result = $this->Form->getDataWeek($plant, $supervisor, $month, $week, $planner_code);
 
         echo json_encode($result);
     }

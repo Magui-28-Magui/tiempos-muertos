@@ -38,6 +38,7 @@ class Home extends CI_Controller
 
         $in['lines'] = $this->Lines->getLines();
         $in['plant'] = $this->Plants->getPlants();
+        $in['supervisor'] = $this->Supervisor->getSupervisor();
         $in['causes_code'] = $this->CausesCode->getCausesCode();
 
         $this->load->view('includes/header');
