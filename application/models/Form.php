@@ -26,7 +26,7 @@ class Form extends CI_Model
         }
 
         $data = array(
-            'plant' => $this->input->post('plant'),
+            'plant' => $this->input->post('plant_select'),
             'supervisor' => $this->input->post('supervisor'),
             'date' => $this->input->post('date'),
             'description' => $this->input->post('description'),
