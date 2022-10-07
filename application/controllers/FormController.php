@@ -73,6 +73,13 @@ class FormController extends CI_Controller
 
         echo json_encode($result);
     }
+    public function getAllData()
+    {
+
+        $result = $this->Form->getData();
+
+        echo json_encode($result);
+    }
     public function getDataWeek()
     {
         $week =  $this->input->get('week');

@@ -67,87 +67,87 @@
 
     function getPlannerCode(get_plant) {
         fetch('<?= base_url() . 'index.php/lines' ?>')
-        .then(response => response.json())
-        .then(result => {
-            var select = document.getElementById("get_planner_code");
+            .then(response => response.json())
+            .then(result => {
+                var select = document.getElementById("get_planner_code");
 
-            var area_filter = [];
+                var area_filter = [];
 
-            if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
-                area_filter = result.filter(response => response.lines_plant === get_plant);
-            }
+                if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
+                    area_filter = result.filter(response => response.lines_plant === get_plant);
+                }
 
-            select.innerHTML = "";
-            area_filter.forEach(value => {
-                var option = document.createElement('option');
+                select.innerHTML = "";
+                area_filter.forEach(value => {
+                    var option = document.createElement('option');
 
-                option.innerHTML = value.planner + '  -  ' + value.line_name;
-                option.value = value.lines_id;
-                select.appendChild(option);
+                    option.innerHTML = value.planner + '  -  ' + value.line_name;
+                    option.value = value.lines_id;
+                    select.appendChild(option);
+                })
+            }).catch(error => {
+                console.log(error)
             })
-        }).catch(error => {
-            console.log(error)
-        })
     }
 
     function getSupervisorChart() {
         fetch('<?= base_url() . 'index.php/supervisor' ?>')
-        .then(response => response.json())
-        .then(result => {
+            .then(response => response.json())
+            .then(result => {
 
-            var select = document.getElementById("get_supervisor_chart");
-            result.forEach(value => {
-                var option = document.createElement('option');
+                var select = document.getElementById("get_supervisor_chart");
+                result.forEach(value => {
+                    var option = document.createElement('option');
 
-                option.innerHTML = value.name;
-                select.appendChild(option);
+                    option.innerHTML = value.name;
+                    select.appendChild(option);
+                })
+            }).catch(error => {
+                console.log(error)
             })
-        }).catch(error => {
-            console.log(error)
-        })
     }
 
     function getSupervisor(get_plant) {
         fetch('<?= base_url() . 'index.php/supervisor' ?>')
-        .then(response => response.json())
-        .then(result => {
+            .then(response => response.json())
+            .then(result => {
 
-            var select = document.getElementById("get_supervisor");
+                var select = document.getElementById("get_supervisor");
 
-            var area_filter = [];
+                var area_filter = [];
 
-            if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
-                area_filter = result.filter(response => response.supervisor_plant === get_plant);
-            }
+                if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
+                    area_filter = result.filter(response => response.supervisor_plant === get_plant);
+                }
 
-            select.innerHTML = "";
-            area_filter.forEach(value => {
-                var option = document.createElement('option');
+                select.innerHTML = "";
+                area_filter.forEach(value => {
+                    var option = document.createElement('option');
 
-                option.innerHTML = value.name;
-                select.appendChild(option);
+                    option.innerHTML = value.name;
+                    select.appendChild(option);
+                })
+            }).catch(error => {
+                console.log(error)
             })
-        }).catch(error => {
-            console.log(error)
-        })
     }
 
     function getCausesCode() {
         fetch('<?= base_url() . 'index.php/causes_code' ?>')
-        .then(response => response.json())
-        .then(result => {
+            .then(response => response.json())
+            .then(result => {
 
-            var select = document.getElementById("cause_code");
+                var select = document.getElementById("cause_code");
 
-            result.forEach(value => {
-                var option = document.createElement('option');
+                result.forEach(value => {
+                    var option = document.createElement('option');
 
-                option.innerHTML = value.code + ' ' + '-' + ' ' + value.cause;
-                select.appendChild(option);
+                    option.innerHTML = value.code + ' ' + '-' + ' ' + value.cause;
+                    select.appendChild(option);
+                })
+            }).catch(error => {
+                console.log(error)
             })
-        }).catch(error => {
-            console.log(error)
-        })
     }
 
     function clearfieldTable() {
@@ -155,6 +155,7 @@
         document.getElementById('table_end_date').value = "";
 
         loadTableData();
+        managementTableAdmin();
     }
 
     function filterTable() {
@@ -165,6 +166,26 @@
         end_date = get_end_date.value;
 
         loadTableData(start_date, end_date);
+    }
+
+    function filterTableAdmin() {
+        var get_start_date = document.getElementById("table_start_date");
+        var get_end_date = document.getElementById("table_end_date");
+
+        start_date = get_start_date.value;
+        end_date = get_end_date.value;
+
+        managementTableAdmin(start_date, end_date);
+    }
+
+    function filterManagement() {
+        var get_start_date = document.getElementById("table_start_date");
+        var get_end_date = document.getElementById("table_end_date");
+
+        start_date = get_start_date.value;
+        end_date = get_end_date.value;
+
+        managementTableAdmin(start_date, end_date);
     }
 
     function loadTableData(start_date, end_date) {
@@ -179,104 +200,25 @@
         URL += '&end_date=' + encodeURIComponent(end_date);
 
         fetch(URL)
-        .then(response => response.json())
-        .then(result => {
+            .then(response => response.json())
+            .then(result => {
 
-            var arr = [];
+                var arr = [];
 
-            result.map((response) => {
-                arr.push(Object.values(response));
-            })
+                result.map((response) => {
+                    arr.push(Object.values(response));
+                })
 
-            $('#table_id').DataTable({
-                dom: 'Bfrtip',
-                stateSave: true,
-                destroy: true,
-                data: arr,
-                order: [
-                    [0, 'desc']
-                ],
-                buttons: [
-                    'copy', 'csv', 'excel', 'print'
-                ],
-                responsive: true,
-                columns: [{
-                        title: 'ID',
-                        data: 0
-                    },
-                    {
-                        title: 'Planta',
-                        data: 1
-                    },
-                    {
-                        title: 'Supervisor',
-                        data: 2
-                    },
-                    {
-                        title: 'Planner code',
-                        data: 13
-                    },
-                    {
-                        title: 'Fecha',
-                        data: 4
-                    },
-                    {
-                        title: 'Info. adicional',
-                        data: 5
-                    },
-                    {
-                        title: 'Código de causa',
-                        data: 19
-                    },
-                    {
-                        title: 'Máquina',
-                        data: 7
-                    },
-                    {
-                        title: 'No. Parte',
-                        data: 8
-                    },
-                    {
-                        title: 'Tiempo (Min)',
-                        data: 9
-                    },
-                    {
-                        title: 'Tiempo (Hrs)',
-                        data: 10
-                    },
-                    {
-                        title: 'Categoria',
-                        data: 21
-                    },
-                    {
-                        title: 'Causa',
-                        data: 22
-                    },
-                    {
-                        title: 'Semana',
-                        data: 23
-                    },
-                ],
-            });
-        });
-    }
-
-    function managementTable() {
-        fetch('<?= base_url() . 'index.php/get_data' ?>')
-        .then(response => response.json())
-        .then(result => {
-
-            var arr = [];
-
-            result.map((response) => {
-                arr.push(Object.values(response));
-            })
-
-            $(document).ready(function() {
-                $('#management_table').DataTable({
+                $('#table_id').DataTable({
+                    dom: 'Bfrtip',
+                    stateSave: true,
+                    destroy: true,
                     data: arr,
                     order: [
                         [0, 'desc']
+                    ],
+                    buttons: [
+                        'copy', 'csv', 'excel', 'print'
                     ],
                     responsive: true,
                     columns: [{
@@ -324,187 +266,286 @@
                             data: 10
                         },
                         {
-                            title: 'Acciones',
-                            className: "dt-center editor-delete",
-                            render: function(data, type, row) {
-                                //return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a> <button type="button" onclick="deleteInefficiency(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button></div>';
-                                return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a>';
-                            },
-                            orderable: false
-                        }
+                            title: 'Categoria',
+                            data: 21
+                        },
+                        {
+                            title: 'Causa',
+                            data: 22
+                        },
+                        {
+                            title: 'Semana',
+                            data: 23
+                        },
                     ],
                 });
             });
-        });
     }
 
-    function managementTableAdmin() {
-        fetch('<?= base_url() . 'index.php/get_data' ?>')
-        .then(response => response.json())
-        .then(result => {
+    function managementTable(start_date, end_date) {
 
-            var arr = [];
+        if (start_date === undefined && end_date === undefined) {
+            start_date = "";
+            end_date = "";
+        }
 
-            result.map((response) => {
-                arr.push(Object.values(response));
-            })
+        var URL = '<?= base_url() . "index.php/get_data" ?>' + '?';
+        URL += 'start_date=' + encodeURIComponent(start_date);
+        URL += '&end_date=' + encodeURIComponent(end_date);
 
-            $(document).ready(function() {
-                $('#management_table_admin').DataTable({
-                    data: arr,
-                    order: [
-                        [0, 'desc']
-                    ],
-                    responsive: true,
-                    columns: [{
-                            title: 'ID',
-                            data: 0
-                        },
-                        {
-                            title: 'Planta',
-                            data: 1
-                        },
-                        {
-                            title: 'Supervisor',
-                            data: 2
-                        },
-                        {
-                            title: 'Planner code',
-                            data: 13
-                        },
-                        {
-                            title: 'Fecha',
-                            data: 4
-                        },
-                        {
-                            title: 'Info. adicional',
-                            data: 5
-                        },
-                        {
-                            title: 'Código de causa',
-                            data: 19
-                        },
-                        {
-                            title: 'Máquina',
-                            data: 7
-                        },
-                        {
-                            title: 'No. Parte',
-                            data: 8
-                        },
-                        {
-                            title: 'Tiempo (Min)',
-                            data: 9
-                        },
-                        {
-                            title: 'Tiempo (Hrs)',
-                            data: 10
-                        },
-                        {
-                            title: 'Acciones',
-                            className: "dt-center editor-delete",
-                            render: function(data, type, row) {
-                                return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a> <button type="button" onclick="deleteInefficiency(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button></div>';
+        fetch(URL)
+            .then(response => response.json())
+            .then(result => {
+
+                var arr = [];
+
+                result.map((response) => {
+                    arr.push(Object.values(response));
+                })
+
+                $(document).ready(function() {
+                    $('#management_table').DataTable({
+                        data: arr,
+                        destroy: true,
+                        order: [
+                            [0, 'desc']
+                        ],
+                        responsive: true,
+                        columns: [{
+                                title: 'ID',
+                                data: 0
                             },
-                            orderable: false
-                        }
-                    ],
+                            {
+                                title: 'Planta',
+                                data: 1
+                            },
+                            {
+                                title: 'Supervisor',
+                                data: 2
+                            },
+                            {
+                                title: 'Planner code',
+                                data: 13
+                            },
+                            {
+                                title: 'Fecha',
+                                data: 4
+                            },
+                            {
+                                title: 'Info. adicional',
+                                data: 5
+                            },
+                            {
+                                title: 'Código de causa',
+                                data: 19
+                            },
+                            {
+                                title: 'Máquina',
+                                data: 7
+                            },
+                            {
+                                title: 'No. Parte',
+                                data: 8
+                            },
+                            {
+                                title: 'Tiempo (Min)',
+                                data: 9
+                            },
+                            {
+                                title: 'Tiempo (Hrs)',
+                                data: 10
+                            },
+                            {
+                                title: 'Acciones',
+                                className: "dt-center editor-delete",
+                                render: function(data, type, row) {
+                                    //return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a> <button type="button" onclick="deleteInefficiency(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button></div>';
+                                    return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a>';
+                                },
+                                orderable: false
+                            }
+                        ],
+                    });
                 });
             });
-        });
+    }
+
+    function managementTableAdmin(start_date, end_date) {
+        if (start_date === undefined && end_date === undefined) {
+            start_date = "";
+            end_date = "";
+        }
+
+        var URL = '<?= base_url() . "index.php/get_data" ?>' + '?';
+        URL += 'start_date=' + encodeURIComponent(start_date);
+        URL += '&end_date=' + encodeURIComponent(end_date);
+
+        fetch(URL)
+            .then(response => response.json())
+            .then(result => {
+                var arr = [];
+
+                result.map((response) => {
+                    arr.push(Object.values(response));
+                })
+
+                $(document).ready(function() {
+                    $('#management_table_admin').DataTable({
+                        data: arr,
+                        destroy: true,
+                        order: [
+                            [0, 'desc']
+                        ],
+                        responsive: true,
+                        columns: [{
+                                title: 'ID',
+                                data: 0
+                            },
+                            {
+                                title: 'Planta',
+                                data: 1
+                            },
+                            {
+                                title: 'Supervisor',
+                                data: 2
+                            },
+                            {
+                                title: 'Planner code',
+                                data: 13
+                            },
+                            {
+                                title: 'Fecha',
+                                data: 4
+                            },
+                            {
+                                title: 'Info. adicional',
+                                data: 5
+                            },
+                            {
+                                title: 'Código de causa',
+                                data: 19
+                            },
+                            {
+                                title: 'Máquina',
+                                data: 7
+                            },
+                            {
+                                title: 'No. Parte',
+                                data: 8
+                            },
+                            {
+                                title: 'Tiempo (Min)',
+                                data: 9
+                            },
+                            {
+                                title: 'Tiempo (Hrs)',
+                                data: 10
+                            },
+                            {
+                                title: 'Acciones',
+                                className: "dt-center editor-delete",
+                                render: function(data, type, row) {
+                                    return '<div class="d-flex"><a type="button" onclick="editInefficiency(this);" href="<?= base_url() . 'index.php/inefficiency/edit/' ?>' + row[0] + '" class="btn btn-warning text-white mx-1" id="' + row[0] + '"><span class="fa fa-edit" /></a> <button type="button" onclick="deleteInefficiency(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button></div>';
+                                },
+                                orderable: false
+                            }
+                        ],
+                    });
+                });
+            });
     }
 
     function managementTableCause() {
         fetch('<?= base_url() . 'index.php/causes_code' ?>')
-        .then(response => response.json())
-        .then(result => {
+            .then(response => response.json())
+            .then(result => {
 
-            var arr = [];
+                var arr = [];
 
-            result.map((response) => {
-                arr.push(Object.values(response));
-            })
+                result.map((response) => {
+                    arr.push(Object.values(response));
+                })
 
-            $(document).ready(function() {
-                $('#cause_table').DataTable({
-                    data: arr,
-                    responsive: true,
-                    order: [
-                        [0, 'desc']
-                    ],
-                    columns: [{
-                            title: 'ID'
-                        },
-                        {
-                            title: 'Código'
-                        },
-                        {
-                            title: 'Departamento'
-                        },
-                        {
-                            title: 'Categoría'
-                        },
-                        {
-                            title: 'Causa'
-                        },
-                        {
-                            className: "dt-center editor-delete",
-                            render: function(data, type, row) {
-                                return '<button type="button" onclick="deleteCause(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button>';
+                $(document).ready(function() {
+                    $('#cause_table').DataTable({
+                        data: arr,
+                        responsive: true,
+                        order: [
+                            [0, 'desc']
+                        ],
+                        columns: [{
+                                title: 'ID'
                             },
-                            orderable: false
-                        }
-                    ],
+                            {
+                                title: 'Código'
+                            },
+                            {
+                                title: 'Departamento'
+                            },
+                            {
+                                title: 'Categoría'
+                            },
+                            {
+                                title: 'Causa'
+                            },
+                            {
+                                className: "dt-center editor-delete",
+                                render: function(data, type, row) {
+                                    return '<button type="button" onclick="deleteCause(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button>';
+                                },
+                                orderable: false
+                            }
+                        ],
+                    });
                 });
             });
-        });
     }
 
     var id_lines = [];
 
     function managementTableArea() {
         fetch('<?= base_url() . 'index.php/lines' ?>')
-        .then(response => response.json())
-        .then(result => {
+            .then(response => response.json())
+            .then(result => {
 
-            const get_id_line = document.getElementById('btn-trash');
-            var arr = [];
+                const get_id_line = document.getElementById('btn-trash');
+                var arr = [];
 
-            result.map((response, index) => {
-                id_lines.push(response.id);
-                arr.push(Object.values(response));
-            })
+                result.map((response, index) => {
+                    id_lines.push(response.id);
+                    arr.push(Object.values(response));
+                })
 
-            $(document).ready(function(index) {
-                $('#area_table').DataTable({
-                    data: arr,
-                    responsive: true,
-                    order: [
-                        [0, 'desc']
-                    ],
-                    columns: [{
-                            title: 'ID'
-                        },
-                        {
-                            title: 'Areas'
-                        },
-                        {
-                            title: 'Planner Code'
-                        },
-                        {
-                            title: 'Planta'
-                        },
-                        {
-                            className: "dt-center editor-delete",
-                            render: function(data, type, row) {
-                                return '<button type="button" onclick="deleteLine(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button>';
+                $(document).ready(function(index) {
+                    $('#area_table').DataTable({
+                        data: arr,
+                        responsive: true,
+                        order: [
+                            [0, 'desc']
+                        ],
+                        columns: [{
+                                title: 'ID'
                             },
-                            orderable: false
-                        }
-                    ],
+                            {
+                                title: 'Areas'
+                            },
+                            {
+                                title: 'Planner Code'
+                            },
+                            {
+                                title: 'Planta'
+                            },
+                            {
+                                className: "dt-center editor-delete",
+                                render: function(data, type, row) {
+                                    return '<button type="button" onclick="deleteLine(this);" class="btn btn-danger delete" id="' + row[0] + '"><span class="fa fa-trash" /></button>';
+                                },
+                                orderable: false
+                            }
+                        ],
+                    });
                 });
             });
-        });
     }
 
     function deleteLine(element) {
@@ -519,16 +560,16 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch('<?= base_url() . 'index.php/lines/delete/' ?>' + element.id + '')
-                .then(result => {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El area se ha eliminado correctamente',
-                        'success'
+                    .then(result => {
+                        Swal.fire(
+                            'Eliminado!',
+                            'El area se ha eliminado correctamente',
+                            'success'
 
-                    ).then((result) => {
-                        window.location.reload(true);
-                    })
-                });
+                        ).then((result) => {
+                            window.location.reload(true);
+                        })
+                    });
             }
         }).catch((error) => {
             Swal.fire({
@@ -697,109 +738,109 @@
         URL += '&supervisor=' + encodeURIComponent(supervisor);
 
         fetch(URL)
-        .then(response => response.json())
-        .then(result => {
-            //variables
-            var myChart;
-            var arr_qty = [];
-            var arr_cause = [];
-            var arr_accum = [];
-            var arr_plant = [];
-            var total_frecuencia = 0;
-            var frecuencia_acumulada = 0;
-            var frecuencia_individual = 0;
-            var arr_frecuencia_individual = [];
+            .then(response => response.json())
+            .then(result => {
+                //variables
+                var myChart;
+                var arr_qty = [];
+                var arr_cause = [];
+                var arr_accum = [];
+                var arr_plant = [];
+                var total_frecuencia = 0;
+                var frecuencia_acumulada = 0;
+                var frecuencia_individual = 0;
+                var arr_frecuencia_individual = [];
 
-            //Crear arreglos con data
-            result.map((response) => {
-                arr_cause.push(response.cause);
-                arr_qty.push(response.time_hour);
-            });
+                //Crear arreglos con data
+                result.map((response) => {
+                    arr_cause.push(response.cause);
+                    arr_qty.push(response.time_hour);
+                });
 
-            //sumar total de time_hour
-            for (var i = 0; i < arr_qty.length; i++) {
-                total_frecuencia += Number(arr_qty[i]);
-            }
+                //sumar total de time_hour
+                for (var i = 0; i < arr_qty.length; i++) {
+                    total_frecuencia += Number(arr_qty[i]);
+                }
 
-            //operaciones para grafica
-            for (var i = 0; i < arr_qty.length; i++) {
-                frecuencia_individual = arr_qty[i] * 100 / total_frecuencia;
-                arr_frecuencia_individual.push(frecuencia_individual);
-                frecuencia_acumulada += frecuencia_individual;
-                arr_accum.push(frecuencia_acumulada);
-            }
+                //operaciones para grafica
+                for (var i = 0; i < arr_qty.length; i++) {
+                    frecuencia_individual = arr_qty[i] * 100 / total_frecuencia;
+                    arr_frecuencia_individual.push(frecuencia_individual);
+                    frecuencia_acumulada += frecuencia_individual;
+                    arr_accum.push(frecuencia_acumulada);
+                }
 
-            //grafica
-            var ctx = document.getElementById('myChart').getContext('2d');
-            let chartStatus = Chart.getChart("myChart");
-            if (chartStatus != undefined) {
-                chartStatus.destroy();
-            }
+                //grafica
+                var ctx = document.getElementById('myChart').getContext('2d');
+                let chartStatus = Chart.getChart("myChart");
+                if (chartStatus != undefined) {
+                    chartStatus.destroy();
+                }
 
-            myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: arr_cause,
-                    datasets: [{
-                        label: "ACCUM",
-                        type: "line",
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        bordcerWidth: 2,
-                        fill: false,
-                        data: arr_accum,
-                        yAxisID: 'y1',
-                    }, {
-                        label: "QTY",
-                        type: "bar",
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 2,
-                        fill: true,
-                        data: arr_qty,
-                        yAxisID: 'y',
-                    }],
-                },
-                options: {
-                    responsive: true,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
+                myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: arr_cause,
+                        datasets: [{
+                            label: "ACCUM",
+                            type: "line",
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            bordcerWidth: 2,
+                            fill: false,
+                            data: arr_accum,
+                            yAxisID: 'y1',
+                        }, {
+                            label: "QTY",
+                            type: "bar",
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2,
+                            fill: true,
+                            data: arr_qty,
+                            yAxisID: 'y',
+                        }],
                     },
-                    stacked: false,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Semana: ' + weekNumber + ' Acumulado :' + total_frecuencia.toFixed(2),
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            ticks: {
-                                beginAtZero: true,
-                                color: 'rgba(54, 162, 235, 1)'
+                    options: {
+                        responsive: true,
+                        interaction: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        stacked: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Semana: ' + weekNumber + ' Acumulado :' + total_frecuencia.toFixed(2),
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true,
+                                    color: 'rgba(54, 162, 235, 1)'
+                                },
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                ticks: {
+                                    beginAtZero: true,
+                                    color: 'rgba(255, 99, 132, 1)'
+                                },
+                                grid: {
+                                    drawOnChartArea: false,
+                                },
                             },
                         },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            ticks: {
-                                beginAtZero: true,
-                                color: 'rgba(255, 99, 132, 1)'
-                            },
-                            grid: {
-                                drawOnChartArea: false,
-                            },
-                        },
                     },
-                },
+                })
             })
-        })
     }
 
     managementTableAdmin();
