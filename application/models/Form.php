@@ -65,6 +65,18 @@ class Form extends CI_Model
 
         return $query->result_array();
     }
+    public function getAllData()
+    {
+        $this->db->select('*');
+        $this->db->from('register');
+        $this->db->join('lines', 'lines.lines_id = register.planner_code', 'left');
+        $this->db->join('supervisores', 'supervisores.supervisor_id = register.supervisor', 'left');
+        $this->db->join('codigo_de_causa', 'codigo_de_causa.cause_id = register.cause_code', 'left');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
     public function getDataWeek($plant, $supervisor, $month, $week, $planner_code)
     {
         //$week_date = date('oW');
