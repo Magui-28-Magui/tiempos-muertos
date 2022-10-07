@@ -23,33 +23,39 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function getPlants() {
-        axios.get('<?= base_url() . 'index.php/plants' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/plants' ?>')
+            .then(response => response.json())
+            .then(result => {
+                var select = document.getElementById("get_plants");
 
-            var select = document.getElementById("get_plants");
-            result.data.forEach(value => {
-                var option = document.createElement('option');
+                result.forEach(value => {
+                    var option = document.createElement('option');
 
-                option.innerHTML = value.name;
-                select.appendChild(option);
+                    option.innerHTML = value.name;
+                    select.appendChild(option);
+                })
             })
-        }).catch(error => {
-            console.log(error)
-        })
+            .catch(error => {
+                console.log('Error ->', error)
+            })
     }
 
     function getPlantsChart() {
-        axios.get('<?= base_url() . 'index.php/plants' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/plants' ?>')
+            .then(response => response.json())
+            .then(result => {
 
-            var select = document.getElementById("chart_plant");
-            result.data.forEach(value => {
-                var option = document.createElement('option');
+                var select = document.getElementById("chart_plant");
 
-                option.innerHTML = value.name;
-                select.appendChild(option);
+                result.forEach(value => {
+                    var option = document.createElement('option');
+
+                    option.innerHTML = value.name;
+                    select.appendChild(option);
+                })
+            }).catch(error => {
+                console.log(error)
             })
-        }).catch(error => {
-            console.log(error)
-        })
     }
 
     function getData(plant) {
@@ -60,14 +66,15 @@
     }
 
     function getPlannerCode(get_plant) {
-        axios.get('<?= base_url() . 'index.php/lines' ?>').then(result => {
-
+        fetch('<?= base_url() . 'index.php/lines' ?>')
+        .then(response => response.json())
+        .then(result => {
             var select = document.getElementById("get_planner_code");
 
             var area_filter = [];
 
             if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
-                area_filter = result.data.filter(response => response.lines_plant === get_plant);
+                area_filter = result.filter(response => response.lines_plant === get_plant);
             }
 
             select.innerHTML = "";
@@ -84,10 +91,12 @@
     }
 
     function getSupervisorChart() {
-        axios.get('<?= base_url() . 'index.php/supervisor' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/supervisor' ?>')
+        .then(response => response.json())
+        .then(result => {
 
             var select = document.getElementById("get_supervisor_chart");
-            result.data.forEach(value => {
+            result.forEach(value => {
                 var option = document.createElement('option');
 
                 option.innerHTML = value.name;
@@ -99,14 +108,16 @@
     }
 
     function getSupervisor(get_plant) {
-        axios.get('<?= base_url() . 'index.php/supervisor' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/supervisor' ?>')
+        .then(response => response.json())
+        .then(result => {
 
             var select = document.getElementById("get_supervisor");
 
             var area_filter = [];
 
             if (get_plant === 'planta 1' || get_plant === 'planta 2' || get_plant === 'planta 3') {
-                area_filter = result.data.filter(response => response.supervisor_plant === get_plant);
+                area_filter = result.filter(response => response.supervisor_plant === get_plant);
             }
 
             select.innerHTML = "";
@@ -122,11 +133,13 @@
     }
 
     function getCausesCode() {
-        axios.get('<?= base_url() . 'index.php/causes_code' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/causes_code' ?>')
+        .then(response => response.json())
+        .then(result => {
 
             var select = document.getElementById("cause_code");
 
-            result.data.forEach(value => {
+            result.forEach(value => {
                 var option = document.createElement('option');
 
                 option.innerHTML = value.code + ' ' + '-' + ' ' + value.cause;
@@ -165,11 +178,13 @@
         URL += 'start_date=' + encodeURIComponent(start_date);
         URL += '&end_date=' + encodeURIComponent(end_date);
 
-        axios.get(URL).then(result => {
+        fetch(URL)
+        .then(response => response.json())
+        .then(result => {
 
             var arr = [];
 
-            result.data.map((response) => {
+            result.map((response) => {
                 arr.push(Object.values(response));
             })
 
@@ -247,11 +262,13 @@
     }
 
     function managementTable() {
-        axios.get('<?= base_url() . 'index.php/get_data' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/get_data' ?>')
+        .then(response => response.json())
+        .then(result => {
 
             var arr = [];
 
-            result.data.map((response) => {
+            result.map((response) => {
                 arr.push(Object.values(response));
             })
 
@@ -322,11 +339,13 @@
     }
 
     function managementTableAdmin() {
-        axios.get('<?= base_url() . 'index.php/get_data' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/get_data' ?>')
+        .then(response => response.json())
+        .then(result => {
 
             var arr = [];
 
-            result.data.map((response) => {
+            result.map((response) => {
                 arr.push(Object.values(response));
             })
 
@@ -396,11 +415,13 @@
     }
 
     function managementTableCause() {
-        axios.get('<?= base_url() . 'index.php/causes_code' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/causes_code' ?>')
+        .then(response => response.json())
+        .then(result => {
 
             var arr = [];
 
-            result.data.map((response) => {
+            result.map((response) => {
                 arr.push(Object.values(response));
             })
 
@@ -442,12 +463,14 @@
     var id_lines = [];
 
     function managementTableArea() {
-        axios.get('<?= base_url() . 'index.php/lines' ?>').then(result => {
+        fetch('<?= base_url() . 'index.php/lines' ?>')
+        .then(response => response.json())
+        .then(result => {
 
             const get_id_line = document.getElementById('btn-trash');
             var arr = [];
 
-            result.data.map((response, index) => {
+            result.map((response, index) => {
                 id_lines.push(response.id);
                 arr.push(Object.values(response));
             })
@@ -495,7 +518,8 @@
             confirmButtonText: 'Eliminar'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('<?= base_url() . 'index.php/lines/delete/' ?>' + element.id + '').then(result => {
+                fetch('<?= base_url() . 'index.php/lines/delete/' ?>' + element.id + '')
+                .then(result => {
                     Swal.fire(
                         'Eliminado!',
                         'El area se ha eliminado correctamente',
@@ -526,7 +550,7 @@
             confirmButtonText: 'Eliminar'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('<?= base_url() . 'index.php/causes_code/delete/' ?>' + element.id + '').then(result => {
+                fetch('<?= base_url() . 'index.php/causes_code/delete/' ?>' + element.id + '').then(result => {
                     Swal.fire(
                         'Eliminado!',
                         'La causa se ha eliminado correctamente',
@@ -557,7 +581,7 @@
             confirmButtonText: 'Eliminar'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('<?= base_url() . 'index.php/inefficiency/delete/' ?>' + element.id + '').then(result => {
+                fetch('<?= base_url() . 'index.php/inefficiency/delete/' ?>' + element.id + '').then(result => {
                     Swal.fire(
                         'Eliminado!',
                         'La ineficiencia se ha eliminado correctamente',
@@ -672,8 +696,9 @@
         URL += '&planner_code=' + encodeURIComponent(planner_code);
         URL += '&supervisor=' + encodeURIComponent(supervisor);
 
-        axios.get(URL).then(result => {
-
+        fetch(URL)
+        .then(response => response.json())
+        .then(result => {
             //variables
             var myChart;
             var arr_qty = [];
@@ -686,7 +711,7 @@
             var arr_frecuencia_individual = [];
 
             //Crear arreglos con data
-            result.data.map((response) => {
+            result.map((response) => {
                 arr_cause.push(response.cause);
                 arr_qty.push(response.time_hour);
             });
@@ -746,7 +771,7 @@
                         title: {
                             display: true,
                             text: 'Semana: ' + weekNumber + ' Acumulado :' + total_frecuencia.toFixed(2),
-                        position: 'top'
+                            position: 'top'
                         }
                     },
                     scales: {
@@ -777,17 +802,6 @@
         })
     }
 
-    //function getTextPage(total_frecuencia, frecuencia_acumulada) {
-
-    //    var get_text_accum = document.getElementById("get_accum_text");
-    //    var text_accum = document.createTextNode("Acumulado total: " + total_frecuencia.toFixed(2));
-    //    get_text_accum.appendChild(text_accum);
-
-    //    var get_text_qty = document.getElementById("get_qty_text");
-    //    var text_qty = document.createTextNode("Cantidad total: " + frecuencia_acumulada.toFixed(2));
-    //    get_text_qty.appendChild(text_qty);
-    //}
-
     managementTableAdmin();
     managementTableCause();
     managementTableArea();
@@ -796,7 +810,6 @@
     getPlantsChart();
     loadTableData();
     getChartData();
-    //getTextPage()
     getPlants();
 </script>
 </body>
