@@ -22,8 +22,17 @@
             <textarea class="form-control" id="description" name="description"></textarea>
         </div>
         <div class="mb-3">
-            <label for="machine" class="form-label">Máquina</label>
-            <input type="text" class="form-control" id="machine" name="machine">
+        <div class="row">
+                <div class="col-md-6">
+                <label for="machine" class="form-label">Máquina</label><span class="text-danger"> (*)</span>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <button type="button" class="btn btn-success mb-2" data-toggle="tooltip" data-bs-placement="left" title="En caso de no tener máquina colocar N/A">
+                        <i class="fa fa-circle-question"></i>
+                    </button>
+                </div>
+            </div>
+            <input type="text" class="form-control" required id="machine" name="machine">
         </div>
     </div>
     <div class="col-md-6">
