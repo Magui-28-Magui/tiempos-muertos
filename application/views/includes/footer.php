@@ -39,6 +39,23 @@
                 console.log('Error ->', error)
             })
     }
+    function getMachines() {
+        fetch('<?= base_url() . 'index.php/machines' ?>')
+            .then(response => response.json())
+            .then(result => {
+                var select = document.getElementById("machine");
+
+                result.forEach(value => {
+                    var option = document.createElement('option');
+
+                    option.innerHTML = value.machine_name;
+                    select.appendChild(option);
+                })
+            })
+            .catch(error => {
+                console.log('Error ->', error)
+            })
+    }
 
     function getPlantsChart() {
         fetch('<?= base_url() . 'index.php/plants' ?>')
@@ -851,6 +868,7 @@
     getPlantsChart();
     loadTableData();
     getChartData();
+    getMachines();
     getPlants();
 </script>
 </body>

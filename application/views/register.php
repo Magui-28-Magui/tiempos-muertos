@@ -32,7 +32,9 @@
                     </button>
                 </div>
             </div>
-            <input type="text" class="form-control" required id="machine" name="machine">
+            <select class="form-control" id="machine" name="machine" required>
+                <option value="">Selecciona una máquina</option>
+            </select>
         </div>
     </div>
     <div class="col-md-6">
