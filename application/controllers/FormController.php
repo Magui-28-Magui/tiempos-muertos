@@ -40,6 +40,12 @@ class FormController extends CI_Controller
 
         echo json_encode($result);
     }
+    public function getMachines()
+    {
+        $result = $this->Machines->getMachines();
+
+        echo json_encode($result);
+    }
     public function getLines()
     {
         $result = $this->Lines->getLines();

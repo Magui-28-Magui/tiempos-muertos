@@ -64,6 +64,7 @@ $route['register']['post'] = "formcontroller/submit";
 //get
 $route['plants'] = "formcontroller/getplants";
 $route['lines'] = "formcontroller/getlines";
+$route['machines'] = "formcontroller/getmachines";
 $route['supervisor'] = "formcontroller/getsupervisor";
 $route['causes_code'] = "formcontroller/getcausescode";
 $route['get_data'] = "formcontroller/getdata";
